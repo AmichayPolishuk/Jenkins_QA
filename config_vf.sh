@@ -1,19 +1,30 @@
 #!/bin/bash
 
-HCA=$(ibstat -l | head -1)
-FABRIC_TYPE=$(ibstat $HCA 1 | grep layer | cut -d' ' -f3)
+# Debug Session
+if [ ${DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+
+# Error Handling
+set -eu
+set -o pipefail
 
 # ConnectX-3 
-if [ $HCA == "mlx4_0" ]; then
+if [-z "$(lspci | grep ConnectX-3)"]; then
 
+    # OFED must be installed
+    if [ -n "$(ofed_info -s)" ]
+        exit 1
+    fi
+    HCA=$(ibstat -l | head -1)
+    FABRIC_TYPE=$(ibstat $HCA 1 | grep layer | cut -d' ' -f3)
     if [ $FABRIC_TYPE == "Ethernet" ]; then
         HCA_BUS=$(lspci | grep nox | head -1 | cut -d':' -f1)
-        lspci | grep nox
         # The following line will be inserted to /etc/modprobe.d/mlx4_core.conf
         CONF_LINE="options mlx4_core port_type_array=2,2 num_vfs=0000:$HCA_BUS:00.0-4;0;0 probe_vf=0000:$HCA_BUS:00.0-4;0;0 enable_64b_cqe_eqe=0 log_num_mgm_entry_size=-1 enable_vfs_qos=1"
         echo $CONF_LINE > /etc/modprobe.d/mlx4_core.conf
         echo "successfully configured OFED rebooting host.."
-        reboot
+        exit 0
     fi
 
     if [ $FABRIC_TYPE == "InfiniBand" ]; then
@@ -23,14 +34,14 @@ if [ $HCA == "mlx4_0" ]; then
         # E_IPOIB_LOAD option in /etc/infiniband/openib.conf will be enabled
         sed -i  -e 's/E_IPOIB_LOAD=no/E_IPOIB_LOAD=yes/g' /etc/infiniband/openib.conf
         echo "successfully configured OFED rebooting host.."
-        reboot
+        exit 0
     fi
-# ConnectX-4 
-else
- 
+    exit 1
+
+elif [-z  "$(lspci | grep ConnectX-4)"]; then
     echo "echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs" >> /etc/rc.local
     # Activate vf's after reboot
     chmod +x /etc/rc.local
-    reboot
-
+    exit 0
 fi 
+exit 1
