@@ -10,10 +10,10 @@ set -eu
 set -o pipefail
 
 # ConnectX-3 
-if [-z "$(lspci | grep ConnectX-3)"]; then
+if [-n "$(lspci | grep ConnectX-3)"]; then
 
     # OFED must be installed
-    if [ -n "$(ofed_info -s)" ]
+    if [ -z "$(ofed_info -s)" ]; then
         exit 1
     fi
     HCA=$(ibstat -l | head -1)
@@ -38,7 +38,7 @@ if [-z "$(lspci | grep ConnectX-3)"]; then
     fi
     exit 1
 
-elif [-z  "$(lspci | grep ConnectX-4)"]; then
+elif [-n  "$(lspci | grep ConnectX-4)"]; then
     echo "echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs" >> /etc/rc.local
     # Activate vf's after reboot
     chmod +x /etc/rc.local
