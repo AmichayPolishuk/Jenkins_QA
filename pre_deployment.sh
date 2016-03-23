@@ -18,3 +18,4 @@ sudo apt-get update
 # Add "intel_iommu=on" to kernel params
 sed -i '/kernel/s/$/ intel_iommu=on/' /boot/grub/grub.conf
 
+exit 0
