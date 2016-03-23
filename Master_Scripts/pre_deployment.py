@@ -1,22 +1,22 @@
 #!/usr/bin/python
 
-import sys, paramiko, subprocess, time
+import sys, os, paramiko, subprocess, time
 
 hostname = "10.209.24.123"
 username = "root"
 password = "3tango"
 port = 22
+wait_flag=True
 
 def run_command(cmd):
   '''connects to other server and excutes command'''
   try:
       client = paramiko.SSHClient()
       client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
       client.connect(hostname, port=port, username=username, password=password)
-      #send command
+      #Send command
       stdin, stdout, stderr = client.exec_command(cmd)
-      # read terminal output and error
+      #Read terminal output and error
       output=stdout.read()
       error=stderr.read()
   finally:
@@ -56,9 +56,26 @@ def main():
   cmd = 'reboot'
   res_config = run_command(cmd)
 
-  print "Start : %s" % time.ctime()
-  time.sleep( 300 )
-  print "End : %s" % time.ctime()
+  wait_flag=True
+  while wait_flag:
+      counter =0
+      ping_response = os.system(' ping -c 1 '+hostname)
+      if ping_respone:
+          wait_flag=False
+          print "The Server : ", hostname, "is up!"
+      else:
+          counter +=1
+          if counter == 10000;
+              wait_flag = False
+              print "Timeout Expired! Check Server"
+
+
+  cmd = 'cd /tmp/Jenkins_QA && bash -x ./verify_vf.sh'
+  res_verify_vf = run_command(cmd)
+  if res_verify_vf[1]:
+      sys.exit(res_verify_vf[1])
+  else:
+      print res_verify_vf[0]          
 
 if __name__ == "__main__":
     main()
