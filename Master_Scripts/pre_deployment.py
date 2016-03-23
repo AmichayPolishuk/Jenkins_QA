@@ -2,9 +2,9 @@
 
 import sys, os, paramiko, subprocess, time
 
-hostname = "10.209.24.123"
-username = "root"
-password = "3tango"
+hostname = "xxxxx"
+username = "xxxxx"
+password = "xxxxx"
 port = 22
 wait_flag=True
 
