@@ -15,6 +15,9 @@ sudo apt-get update
 # Install GA OFED
 /mswg/release/MLNX_OFED/MLNX_OFED_LINUX-3.2-2.0.0.0/MLNX_OFED_LINUX-3.2-2.0.0.0-ubuntu14.04-x86_64/mlnxofedinstall --enable-sriov --force
 
+# Restart HCA
+/etc/init.d/openibd restart
+
 # Add "intel_iommu=on" to kernel params
 sed -i '/kernel/s/$/ intel_iommu=on/' /boot/grub/grub.conf
 
