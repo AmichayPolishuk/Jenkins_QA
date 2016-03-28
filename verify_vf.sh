@@ -19,3 +19,11 @@ else
     echo "Failed to create virtual functions !"
     exit 1
 fi
+
+# Bring Up All Interfaces
+
+for port in `ibdev2netdev | cut -d' ' -f5`; do
+    ifconfig $port up
+done
+
+sleep 5 
