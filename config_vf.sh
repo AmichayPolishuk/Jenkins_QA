@@ -43,16 +43,13 @@ elif [ -n  "$(lspci | grep ConnectX-4)" ]; then
     ports_number=$(lspci | grep -c "\[ConnectX-4")
     
     if [ $ports_number == 1 ]; then
-        echo "echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs" >> /etc/rc.local
-        chmod +x /etc/rc.local
+        crontab -l | { cat; echo "@reboot (echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs)"; } | crontab -
         exit 0
     fi
 
     if [ $ports_number == 2 ]; then
-        echo "echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs" >> /etc/rc.local
-        echo "echo 4 > /sys/class/infiniband/mlx5_1/device/sriov_numvfs" >> /etc/rc.local
-        #Activate vf's after reboot
-        chmod +x /etc/rc.local
+        crontab -l | { cat; echo "@reboot (echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs)"; } | crontab - 
+        crontab -l | { cat; echo "@reboot (echo 4 > /sys/class/infiniband/mlx5_1/device/sriov_numvfs)"; } | crontab -       
         exit 0
     fi
 
