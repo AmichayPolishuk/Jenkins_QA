@@ -12,6 +12,9 @@ set -o pipefail
 # Update Cashe
 sudo apt-get update
 
+# Update PCI Information 
+sudo update-pciids
+
 # Install GA OFED
 /mswg/release/MLNX_OFED/MLNX_OFED_LINUX-3.2-2.0.0.0/MLNX_OFED_LINUX-3.2-2.0.0.0-ubuntu14.04-x86_64/mlnxofedinstall --enable-sriov --force
 

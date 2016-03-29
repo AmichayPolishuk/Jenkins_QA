@@ -39,9 +39,22 @@ if [ -n "$(lspci | grep ConnectX-3)" ]; then
     exit 1
 
 elif [ -n  "$(lspci | grep ConnectX-4)" ]; then
-    echo "echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs" >> /etc/rc.local
-    # Activate vf's after reboot
-    chmod +x /etc/rc.local
-    exit 0
+    # Check the Physical Port Number 
+    ports_number=$(lspci | grep -c "\[ConnectX-4")
+    
+    if [ $ports_number == 1 ]; then
+        echo "echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs" >> /etc/rc.local
+        chmod +x /etc/rc.local
+        exit 0
+    fi
+
+    if [ $ports_number == 2 ]; then
+        echo "echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs" >> /etc/rc.local
+        echo "echo 4 > /sys/class/infiniband/mlx5_1/device/sriov_numvfs" >> /etc/rc.local
+        #Activate vf's after reboot
+        chmod +x /etc/rc.local
+        exit 0
+    fi
+
 fi 
 exit 1
