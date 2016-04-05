@@ -22,6 +22,7 @@ sudo update-pciids
 /etc/init.d/openibd restart
 
 # Add "intel_iommu=on" to kernel params
-sed -i '/kernel/s/$/ intel_iommu=on/' /boot/grub/grub.conf
+sed -i '/kernel/s/$/ intel_iommu=on net.ifname=0/' /boot/grub/grub.conf
+sed -i '/kernel/s/$/ intel_iommu=on net.ifname=0/' /boot/grub/menu.lst
 
 exit 0

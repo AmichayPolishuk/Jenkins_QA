@@ -23,7 +23,12 @@ if [ -n "$(lspci | grep ConnectX-3)" ]; then
         # The following line will be inserted to /etc/modprobe.d/mlx4_core.conf
         CONF_LINE="options mlx4_core port_type_array=2,2 num_vfs=0000:$HCA_BUS:00.0-4;0;0 probe_vf=0000:$HCA_BUS:00.0-4;0;0 enable_64b_cqe_eqe=0 log_num_mgm_entry_size=-1 enable_vfs_qos=1"
         echo $CONF_LINE > /etc/modprobe.d/mlx4_core.conf
-        echo "successfully configured OFED rebooting host.."
+        echo "successfully configured modprobe file"
+        # Install lldpd on host
+        sudo apt-get -y install lldpd
+        # Update hostname using lldpdcli
+        lldpcli configure system hostname $HOSTNAME
+        lldpcli update 
         exit 0
     fi
 

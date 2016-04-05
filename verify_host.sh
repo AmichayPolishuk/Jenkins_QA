@@ -9,6 +9,9 @@ fi
 set -eu
 set -o pipefail
 
+# Check intel_iommu=on 
+cat /proc/cmdline
+
 # Check virtual functions existance
 NUMBER_OF_VFS=$(lspci | grep "Virtual Function" | wc -l)
 
