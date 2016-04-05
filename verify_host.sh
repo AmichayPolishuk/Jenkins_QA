@@ -5,6 +5,7 @@ if [ ${DEBUG_TRACE:-0} -gt 0 ]; then
     set -x
 fi
 
+
 # Error Handling
 set -eu
 set -o pipefail
