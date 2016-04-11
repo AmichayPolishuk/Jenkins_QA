@@ -7,9 +7,7 @@ import paramiko
 hostname = str(sys.argv[1])
 username = str(sys.argv[2])
 password = str(sys.argv[3])
-
 port = 22
-wait_flag = True
 
 def run_command(cmd):
     '''connects to other server and excutes command'''
