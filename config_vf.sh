@@ -46,7 +46,7 @@ if [ -n "$(lspci | grep ConnectX-3)" ]; then
 elif [ -n  "$(lspci | grep ConnectX-4)" ]; then
     # Check the Physical Port Number 
     ports_number=$(lspci | grep -c "\[ConnectX-4")
-    
+    crontab -l > /etc/Jenkins_QA/crontab 
     if [ $ports_number == 1 ]; then
         crontab -l | { cat; echo "@reboot (echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs)"; } | crontab -
         exit 0

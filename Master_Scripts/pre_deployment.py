@@ -83,7 +83,7 @@ def main():
     print "=================================================="
     print "Step 3 - OFED Installation + Add Kernel Parameters"
     print "=================================================="
-    cmd = 'cd /tmp/Jenkins_QA && bash -x ./pre_deployment.sh'
+    cmd = 'cd /etc/Jenkins_QA && bash -x ./pre_deployment.sh'
     res_pre_deployment = run_command(cmd)
     if res_pre_deployment[1]:
         sys.exit(res_pre_deployment[1])
@@ -94,7 +94,7 @@ def main():
     print "====================================="
     print "Step 4 - Configure Virtual Functions "
     print "====================================="
-    cmd = 'cd /tmp/Jenkins_QA && bash -x ./config_vf.sh'
+    cmd = 'cd /etc/Jenkins_QA && bash -x ./config_vf.sh'
     res_config_vf = run_command(cmd)
     if res_config_vf[1]:
         sys.exit(res_config_vf[1])
@@ -113,7 +113,7 @@ def main():
     print "==========================================================================="
     print "Step 6 - Verify Host - Vf's, Interface status and Kernel Paramas existance "
     print "==========================================================================="
-    cmd = 'cd /tmp/Jenkins_QA && bash -x ./verify_vf.sh'
+    cmd = 'cd /etc/Jenkins_QA && bash -x ./verify_host.sh'
     res_verify_vf = run_command(cmd)
     if res_verify_vf[1]:
         sys.exit(res_verify_vf[1])
