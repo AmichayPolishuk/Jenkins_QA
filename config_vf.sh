@@ -21,7 +21,7 @@ if [ $FABRIC_TYPE == "Ethernet" ]; then
     # Install lldpd on host
     sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/vbernat/xUbuntu_14.04/ /' >> /etc/apt/sources.list.d/lldpd.list"
     sudo apt-get update
-    sudo apt-get install lldpd
+    sudo apt-get -y --force-yes install lldpd
     # Update hostname using lldpdcli
     lldpcli configure system hostname $HOSTNAME
     lldpcli update
