@@ -25,7 +25,6 @@ if [ $FABRIC_TYPE == "Ethernet" ]; then
     # Update hostname using lldpdcli
     lldpcli configure system hostname $HOSTNAME
     lldpcli update
-    exit 0
 fi
 
 # ConnectX-3 
@@ -56,6 +55,11 @@ if [ -n "$(lspci | grep ConnectX-3)" ]; then
     exit 1
 
 elif [ -n  "$(lspci | grep ConnectX-4)" ]; then
+    # Check crontab file existance
+    if [ ! "$(crontab -l)" ]; then
+        [ ! "$(crontab -l | { cat; echo ""; } | crontab - )"]
+    fi
+    
     # Check the Physical Port Number 
     ports_number=$(lspci | grep -c "\[ConnectX-4")
     if [ $ports_number == 1 ]; then
@@ -65,7 +69,7 @@ elif [ -n  "$(lspci | grep ConnectX-4)" ]; then
 
     if [ $ports_number == 2 ]; then
         crontab -l | { cat; echo "@reboot (echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs)"; } | crontab - 
-        crontab -l | { cat; echo "@reboot (echo 4 > /sys/class/infiniband/mlx5_1/device/sriov_numvfs)"; } | crontab -       
+        crontab -l | { cat; echo "@reboot (echo 4 > /sys/class/infiniband/mlx5_1/device/sriov_numvfs)"; } | crontab - 
         exit 0
     fi
 
