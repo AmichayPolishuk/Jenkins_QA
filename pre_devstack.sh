@@ -13,7 +13,6 @@ sudo apt-get update
 sudo apt-get install -y --force-yes sshpass
 sudo apt-get install -y --force-yes openssh-server
 sudo pip install setuptools==20.1.1
-sudo apt-get install python2.7-dev
 
 # Create Devstack User - stack
 

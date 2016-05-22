@@ -12,5 +12,6 @@ set -o pipefail
 
 su - stack
 echo stack > password.txt
+rm -fr /root/.ssh/id_rsa
 echo | ssh-keygen -P ''
 for host_index in "${SETUP_LIST[@]}"; do sshpass -f password.txt ssh-copy-id stack@$host_index; done
