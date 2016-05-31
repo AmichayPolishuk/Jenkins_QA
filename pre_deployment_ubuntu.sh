@@ -12,7 +12,7 @@ set -o pipefail
 
 # Update Cashe
 sudo apt-get update
-sudo apt-get upgrade
+sudo apt-get -y upgrade
 
 # Update PCI Information 
 sudo update-pciids
