@@ -8,11 +8,6 @@ fi
 set -eu
 set -o pipefail
 
-# Install Packadges
-sudo apt-get install -y --force-yes sshpass
-sudo apt-get install -y --force-yes openssh-server
-sudo pip install setuptools==20.1.1
-
 # Create Devstack User - stack
 
 groupadd stack

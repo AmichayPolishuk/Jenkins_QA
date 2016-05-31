@@ -17,15 +17,6 @@ fi
 HCA=$(ibstat -l | head -1)
 FABRIC_TYPE=$(ibstat $HCA 1 | grep layer | cut -d' ' -f3)
 
-if [ $FABRIC_TYPE == "Ethernet" ]; then
-    # Install lldpd on host
-    sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/vbernat/xUbuntu_14.04/ /' >> /etc/apt/sources.list.d/lldpd.list"
-    sudo apt-get -y --force-yes install lldpd
-    # Update hostname using lldpdcli
-    lldpcli configure system hostname $HOSTNAME
-    lldpcli update
-fi
-
 # ConnectX-3 
 if [ -n "$(lspci | grep ConnectX-3)" ]; then
 
