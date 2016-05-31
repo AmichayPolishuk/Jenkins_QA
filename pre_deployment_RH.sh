@@ -13,7 +13,7 @@ set -o pipefail
 # Install before OFED Installation
 yum install createrepo -y 
 yum update -y
-yum install -y kernel-devel redhat-rpm-config gcc rpm-build python-devel gcc-gfortran gtk2 tcsh tcl tk grub2-tools crudini
+yum install -y kernel-devel redhat-rpm-config gcc rpm-build python-devel gcc-gfortran gtk2 tcsh tcl tk grub2-tools crudini sshpass
 
 
 # Install GA OFED
