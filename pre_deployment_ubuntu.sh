@@ -25,7 +25,7 @@ build=latest /mswg/release/MLNX_OFED/mlnx_ofed_install --hypervisor --add-kernel
 /etc/init.d/openibd restart
 
 # Add "intel_iommu=on" to kernel params
-sed -i '/kernel/s/$/ intel_iommu=on net.ifnames=0/' /boot/grub/grub.conf
-sed -i '/kernel/s/$/ intel_iommu=on net.ifnames=0/' /boot/grub/menu.lst
+sed -i '/kernel/s/$/ intel_iommu=on /' /boot/grub/grub.conf
+sed -i '/kernel/s/$/ intel_iommu=on /' /boot/grub/menu.lst
 
 exit 0
