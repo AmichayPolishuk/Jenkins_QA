@@ -13,7 +13,7 @@ set -o pipefail
 # Update Cashe
 sudo apt-get update
 sudo apt-get -y upgrade
-sudo apt-get -y sshpass
+sudo apt-get install -y sshpass
 
 # Update PCI Information 
 sudo update-pciids
