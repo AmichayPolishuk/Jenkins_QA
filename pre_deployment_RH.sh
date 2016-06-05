@@ -17,7 +17,7 @@ yum install -y kernel-devel redhat-rpm-config gcc rpm-build python-devel gcc-gfo
 
 
 # Install GA OFED
-build=MLNX_OFED_LINUX-3.2-2.0.0.0 /mswg/release/MLNX_OFED/mlnx_ofed_install --hypervisor --add-kernel-support --force-fw-update --enable-sriov --force
+build=MLNX_OFED_LINUX-3.3-1.0.0.0 /mswg/release/MLNX_OFED/mlnx_ofed_install --hypervisor --add-kernel-support --force-fw-update --enable-sriov --force
 # build=latest /mswg/release/MLNX_OFED/mlnx_ofed_install --hypervisor --add-kernel-support --force-fw-update --enable-sriov --force
 
 # Restart HCA
