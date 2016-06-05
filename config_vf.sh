@@ -53,13 +53,13 @@ elif [ -n  "$(lspci | grep ConnectX-4)" ]; then
     # Check the Physical Port Number 
     ports_number=$(lspci | grep -c "\[ConnectX-4")
     if [ $ports_number == 1 ]; then
-        crontab -l | { cat; echo "@reboot (echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs)"; } | crontab -
+        crontab -l | { cat; echo "@reboot sleep 60 && echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs"; } | crontab -
         exit 0
     fi
 
     if [ $ports_number == 2 ]; then
-        crontab -l | { cat; echo "@reboot (echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs)"; } | crontab - 
-        crontab -l | { cat; echo "@reboot (echo 4 > /sys/class/infiniband/mlx5_1/device/sriov_numvfs)"; } | crontab - 
+        crontab -l | { cat; echo "@reboot sleep 60 && echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs"; } | crontab - 
+        crontab -l | { cat; echo "@reboot sleep 60 && echo 4 > /sys/class/infiniband/mlx5_1/device/sriov_numvfs"; } | crontab - 
         exit 0
     fi
 
