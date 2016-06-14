@@ -14,6 +14,9 @@ set -o pipefail
 yum install createrepo -y 
 yum update -y
 yum install -y kernel-devel redhat-rpm-config gcc rpm-build python-devel gcc-gfortran gtk2 tcsh tcl tk grub2-tools crudini sshpass openvswitch
+sudo dnf -y install libxslt-devel libxml2-devel postgresql-devel libevent-devel memcached screen genisoimage libffi-devel openssl-devel
+
+# Enable and restart openvswitch
 
 
 # Install GA OFED
