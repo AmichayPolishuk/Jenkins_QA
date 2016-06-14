@@ -14,6 +14,7 @@ set -o pipefail
 sudo apt-get update
 sudo apt-get -y upgrade
 sudo apt-get install -y sshpass
+sudo apt-get install openvswitch-switch vncviewer -y
 
 # Update PCI Information 
 sudo update-pciids
