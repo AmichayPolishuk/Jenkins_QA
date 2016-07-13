@@ -11,21 +11,19 @@ set -eu
 set -o pipefail
 
 # Install before OFED Installation
-yum install createrepo -y 
+subscription-manager register --username openstack_mlnx --password openstack_mlnx_2015 --auto-attach
+subscription-manager repos --enable rhel-7-server-optional-rpms
+subscription-manager repos --enable rhel-7-server-extras-rpms 
 yum update -y
-yum install -y kernel-devel redhat-rpm-config gcc rpm-build python-devel gcc-gfortran gtk2 tcsh tcl tk grub2-tools crudini sshpass openvswitch
-sudo dnf -y install libxslt-devel libxml2-devel postgresql-devel libevent-devel memcached screen genisoimage libffi-devel openssl-devel lvm2 
+yum install -y lvm2 tigervnc
 
-# Enable & Restart openvswitch and lvm
-systemctl enable openvswitch.service
-systemctl start openvswitch.service
-systemctl status openvswitch.service
+# Enable & Restart lvm
 /sbin/service lvm2-lvmetad start
 /sbin/service lvm2-lvmetad status
 
 
 # Install GA OFED
-build=MLNX_OFED_LINUX-3.3-1.0.0.0 /mswg/release/MLNX_OFED/mlnx_ofed_install --hypervisor --add-kernel-support --force-fw-update --enable-sriov --force
+build=MLNX_OFED_LINUX-3.3-1.5.0.0 /mswg/release/MLNX_OFED/mlnx_ofed_install --hypervisor --add-kernel-support --force-fw-update --enable-sriov --force
 # build=latest /mswg/release/MLNX_OFED/mlnx_ofed_install --hypervisor --add-kernel-support --force-fw-update --enable-sriov --force
 
 # Restart HCA
