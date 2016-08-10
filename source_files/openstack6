@@ -1,9 +1,0 @@
-controller_nodes=r-smg45
-controller_ip_address=10.209.24.134
-compute_nodes=r-smg46,r-smg47
-cinder_nodes=r-smg45
-setup_type=eth
-floating_allocation_pool_start=10.209.25.170
-floating_allocation_pool_end=10.209.25.179
-vlan_pool_start=51
-vlan_pool_end=60

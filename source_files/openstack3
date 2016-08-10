@@ -1,9 +1,0 @@
-controller_nodes=r-smg36
-controller_ip_address=10.209.24.104
-compute_nodes=r-smg37,r-smg38
-cinder_nodes=r-smg36
-setup_type=eth
-floating_allocation_pool_start=10.209.25.140
-floating_allocation_pool_end=10.209.25.149
-vlan_pool_start=21
-vlan_pool_end=30
