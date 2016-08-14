@@ -29,7 +29,7 @@ if [ -n "$(lspci | grep ConnectX-3)" ]; then
         # The following line will be inserted to /etc/modprobe.d/mlx4_core.conf
         ports_number=$(lspci | grep -c "\[ConnectX-3")
         if [ $ports_number == 1 ]; then
-            CONF_LINE="options mlx4_core port_type_array=2 num_vfs=0000:$HCA_BUS:00.0-4;0;0 probe_vf=0000:$HCA_BUS:00.0-4;0;0 enable_64b_cqe_eqe=0 log_num_mgm_entry_size=-1 enable_vfs_qos=1"
+            CONF_LINE="options mlx4_core port_type_array=2 num_vfs=4 probe_vf=4 enable_64b_cqe_eqe=0 log_num_mgm_entry_size=-1 enable_vfs_qos=1"
         fi
         if [ $ports_number == 2 ]; then
             CONF_LINE="options mlx4_core port_type_array=2,2 num_vfs=0000:$HCA_BUS:00.0-4;0;0 probe_vf=0000:$HCA_BUS:00.0-4;0;0 enable_64b_cqe_eqe=0 log_num_mgm_entry_size=-1 enable_vfs_qos=1"
