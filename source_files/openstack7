@@ -1,6 +1,6 @@
-controller_ip_address=10.209.24.129
-floating_allocation_pool_start=10.209.25.180
-floating_allocation_pool_end=10.209.25.189
-vlan_pool_start=61
-vlan_pool_end=70
+export controller_ip_address=10.209.24.129
+export floating_allocation_pool_start=10.209.25.180
+export floating_allocation_pool_end=10.209.25.189
+export vlan_pool_start=61
+export vlan_pool_end=70
 
