@@ -27,13 +27,18 @@ fi
 mlx=`echo $HCA | sed s/mlx//g`
 let mlx=mlx-1
 export mlnx_dev=`lspci |grep Mell|grep "\-$mlx" |head -n1|awk '{print $1}' |  sed s/\.0\$//g`
-export mlnx_port=`ibdev2netdev  | grep ${HCA}_0 | grep Up| grep ib| awk '{print $5}'|tail -n1`
 echo $mlnx_dev
-echo $mlnx_port
+
+if [ $FABRIC_TYPE == "Ethernet" ]; then
+    export mlnx_port=`ibdev2netdev  | grep Up| awk '{print $5}'|head -n1`
+    echo $mlnx_port
+
 
 if [ $FABRIC_TYPE == "InfiniBand" ]; then
     export epioib_port=`ibdev2netdev  | grep ${HCA}_0 | grep Up| awk '{print $5}'|head -n1`
     echo $epioib_port
+    export mlnx_port=`ibdev2netdev  | grep ${HCA}_0 | grep Up| grep ib| awk '{print $5}'|tail -n1`
+    echo $mlnx_port
 fi 
 
 
