@@ -32,7 +32,7 @@ echo $mlnx_dev
 if [ $FABRIC_TYPE == "Ethernet" ]; then
     export mlnx_port=`ibdev2netdev  | grep Up| awk '{print $5}'|head -n1`
     echo $mlnx_port
-
+fi
 
 if [ $FABRIC_TYPE == "InfiniBand" ]; then
     export epioib_port=`ibdev2netdev  | grep ${HCA}_0 | grep Up| awk '{print $5}'|head -n1`
