@@ -1,12 +1,4 @@
-#!/bin/bash
-# Debug Session
-if [ ${DEBUG_TRACE:-0} -gt 0 ]; then
-    set -x
-fi
-
-# Error Handling
-set -eu
-set -o pipefail
+#!/usr/bin/env bash
 
 # OFED must be installed
 if [ -z "$(ofed_info -s)" ]; then
@@ -16,13 +8,13 @@ fi
 CA=$(/usr/sbin/ibstat -l | head -1)
 FABRIC_TYPE=$(/usr/sbin/ibstat $CA 1 | grep layer | cut -d' ' -f3)
 
-# ConnectX-3 
+# ConnectX-3
 if [ -n "$(lspci | grep ConnectX-3)" ]; then
     export HCA=${HCA:-"mlx4"}
 # ConnectX-4
 elif [ -n "$(lspci | grep ConnectX-4)" ]; then
     export HCA=${HCA:-"mlx5"}
-fi 
+fi
 
 mlx=`echo $HCA | sed s/mlx//g`
 let mlx=mlx-1
@@ -39,6 +31,5 @@ if [ $FABRIC_TYPE == "InfiniBand" ]; then
     echo $epioib_port
     export mlnx_port=`ibdev2netdev  | grep ${HCA}_0 | grep Up| grep ib| awk '{print $5}'|tail -n1`
     echo $mlnx_port
-fi 
-
+fi
 
