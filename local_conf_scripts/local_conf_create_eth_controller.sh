@@ -11,7 +11,7 @@ set -o pipefail
 echo "==========================================================="
 echo " Create&Edit local.conf for Controller-Network-Cinder Node "
 echo "==========================================================="
-sudo cat > /opt/stack/devstack/local.conf << EOF
+cat > /opt/stack/devstack/local.conf << EOF
 [[local|localrc]]
 DOWNLOAD_DEFAULT_IMAGES=False
 IMAGE_URLS="http://10.209.24.107/images/mellanox-ubuntu-xenial-OFED3.3-1.5.0.0.qcow2,"
@@ -41,10 +41,10 @@ Q_ML2_PLUGIN_TYPE_DRIVERS=flat,vlan
 ENABLE_TENANT_TUNNELS=False
 Q_ML2_TENANT_NETWORK_TYPE=vlan
 PHYSICAL_NETWORK=default
-PHYSICAL_INTERFACE=\${mlnx_port}
+PHYSICAL_INTERFACE=${mlnx_port}
 TENANT_VLAN_RANGE=${vlan_pool_start}:${vlan_pool_end}
 NETWORK_API_EXTENSIONS=dhcp_agent_scheduler,external-net,ext-gw-mode,binding,quotas,agent,l3_agent_scheduler,provider,router,extraroute,security-group
-OVS_PHYSICAL_BRIDGE=br-\${mlnx_port}
+OVS_PHYSICAL_BRIDGE=br-${mlnx_port}
 ALLOW_NEUTRON_DB_MIGRATIONS=true
 IP_VERSION=4
 FIXED_RANGE="192.168.1.0/24"
@@ -64,8 +64,6 @@ enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth hor
 enable_plugin neutron_ml2_mlnx git://github.com/openstack/networking-mlnx 
 enable_plugin neutron git://git.openstack.org/openstack/neutron 
 enable_service tempest
-enable_plugin rally https://github.com/openstack/rally
-USE_SCREEN=True
 
 [[post-config|\$NOVA_CONF]]
 [DEFAULT]

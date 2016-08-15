@@ -11,7 +11,7 @@ set -o pipefail
 echo "========================================="
 echo " Create&Edit local.conf for Compute Node "
 echo "========================================="
-sudo cat > /opt/stack/devstack/local.conf << EOF
+cat > /opt/stack/devstack/local.conf << EOF
 [[local|localrc]]
 MULTI_HOST=1
 ADMIN_PASSWORD=password
@@ -37,8 +37,8 @@ Q_ML2_PLUGIN_TYPE_DRIVERS=vlan
 ENABLE_TENANT_TUNNELS=False
 Q_ML2_TENANT_NETWORK_TYPE=vlan
 PHYSICAL_NETWORK=default
-PHYSICAL_INTERFACE=\${mlnx_port}
-OVS_PHYSICAL_BRIDGE=br-\${PHYSICAL_INTERFACE}
+PHYSICAL_INTERFACE=${mlnx_port}
+OVS_PHYSICAL_BRIDGE=br-${PHYSICAL_INTERFACE}
 SERVICE_HOST=${controller_ip_address}
 MYSQL_HOST=${controller_ip_address}
 RABBIT_HOST=${controller_ip_address}
@@ -54,7 +54,7 @@ ENABLED_SERVICES=n-cpu,q-agt,n-api-meta,q-sriov-agt
 USE_SCREEN=True
 [[post-config|\$NOVA_CONF]]
 [DEFAULT]
-pci_passthrough_whitelist ={"'"address"'":"'"*:'"\${mlnx_dev}"'.*"'","'"physical_network"'":"'"default"'"}
+pci_passthrough_whitelist ={"'"address"'":"'"*:'"${mlnx_dev}"'.*"'","'"physical_network"'":"'"default"'"}
 EOF
 exit 0
 
