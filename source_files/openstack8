@@ -1,10 +1,7 @@
-controller_nodes=r-smg49
-controller_ip_address=10.209.24.139
-compute_nodes=r-smg49
-cinder_nodes=r-smg49
-setup_type=eth
-floating_allocation_pool_start=10.209.25.185
-floating_allocation_pool_end=10.209.25.189
-vlan_pool_start=66
-vlan_pool_end=70
+#!/usr/bin/env bash
+export controller_ip_address=10.209.24.147
+export floating_allocation_pool_start=10.209.26.20
+export floating_allocation_pool_end=10.209.29
+export vlan_pool_start=71
+export vlan_pool_end=80
 
