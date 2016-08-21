@@ -5,6 +5,10 @@ if [ -z "$(ofed_info -s)" ]; then
     exit 1
 fi
 
+public_interface=$(ip link show | grep -e "^3:" | awk '{print $2}' | cut -d':' -f1) 
+export public_interface
+echo $public_interface
+
 CA=$(/usr/sbin/ibstat -l | head -1)
 FABRIC_TYPE=$(/usr/sbin/ibstat $CA 1 | grep layer | cut -d' ' -f3)
 
