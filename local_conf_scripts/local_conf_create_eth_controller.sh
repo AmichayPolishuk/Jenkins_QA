@@ -15,6 +15,7 @@ cat > /opt/stack/devstack/local.conf << EOF
 [[local|localrc]]
 DOWNLOAD_DEFAULT_IMAGES=False
 IMAGE_URLS="http://10.209.24.107/images/mellanox-ubuntu-xenial-OFED3.3-1.5.0.0.qcow2,"
+IMAGE_URLS+="http://10.209.24.107/images/mellanox-rhel7.2-OFED3.3-1.5.0.0.qcow2"
 MULTI_HOST=1
 ADMIN_PASSWORD=password
 MYSQL_PASSWORD=password
@@ -30,34 +31,37 @@ LOGDAYS=1
 # Cinder
 VOLUME_BACKING_FILE_SIZE=10000M
 # Neutron
-SERVICE_TOKEN=servicetoken
-Q_PLUGIN=ml2
-Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch,sriovnicswitch        
-Q_AGENT=openvswitch
-Q_USE_DEBUG_COMMAND=False
-Q_USE_SECGROUP=True
-ENABLE_TENANT_VLANS=True
+SERVICE_TOKEN=servicetoken                                                            
+Q_PLUGIN=ml2                                                                          
+Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch,sriovnicswitch                             
+Q_AGENT=openvswitch                                                                   
+Q_USE_DEBUG_COMMAND=False                                                             
+Q_USE_SECGROUP=True                                                                   
+ENABLE_TENANT_VLANS=True                                                              
 Q_ML2_PLUGIN_TYPE_DRIVERS=flat,vlan
 ENABLE_TENANT_TUNNELS=False
 Q_ML2_TENANT_NETWORK_TYPE=vlan
-PHYSICAL_NETWORK=default
-PHYSICAL_INTERFACE=${mlnx_port}
+PHYSICAL_NETWORK=public
 TENANT_VLAN_RANGE=${vlan_pool_start}:${vlan_pool_end}
 NETWORK_API_EXTENSIONS=dhcp_agent_scheduler,external-net,ext-gw-mode,binding,quotas,agent,l3_agent_scheduler,provider,router,extraroute,security-group
-OVS_PHYSICAL_BRIDGE=br-${mlnx_port}
+OVS_PHYSICAL_BRIDGE=br-ex
 ALLOW_NEUTRON_DB_MIGRATIONS=true
 IP_VERSION=4
 FIXED_RANGE="192.168.1.0/24"
 NETWORK_GATEWAY=192.168.1.1
 PROVIDER_SUBNET_NAME=private_network
 PROVIDER_NETWORK_TYPE=vlan
-PUBLIC_NETWORK_GATEWAY=10.209.24.1
-FLOATING_RANGE=10.209.24.0/22
+PUBLIC_NETWORK_GATEWAY=10.209.86.1
+FLOATING_RANGE=10.209.86.0/24
 Q_FLOATING_ALLOCATION_POOL=start=${floating_allocation_pool_start},end=${floating_allocation_pool_end}
 Q_USE_PROVIDERNET_FOR_PUBLIC=True
 PUBLIC_PHYSICAL_NETWORK=public
-OVS_BRIDGE_MAPPINGS=public:br-ex
 Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS=public
+PUBLIC_INTERFACE=${public_interface}
+PUBLIC_BRIDGE=br-ex
+PHYSICAL_INTERFACE=${mlnx_port}
+OVS_BRIDGE_MAPPINGS=default:br-p5p1,public:br-ex
+ML2_VLAN_RANGES=default:$TENANT_VLAN_RANGE
 
 disable_service h-eng h-api h-api-cfn h-api-cw n-net n-cpu
 enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon
