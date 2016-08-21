@@ -8,11 +8,13 @@ fi
 set -eu
 set -o pipefail
 
-sudo cat > /etc/sysconfig/network-scripts/ifcfg-br-ex  << EOF
+echo ${public_interface_ip}
+
+sudo bash -c 'cat << EOF > /etc/sysconfig/network-scripts/ifcfg-br-ex
 DEVICE=br-ex
 BOOTPROTO=none
 ONBOOT=yes
 NETWORK=10.209.86.0
 PREFIX=24
-IPADDR=${public_interface_ip}
-EOF
+IPADDR='${public_interface_ip}'
+EOF'
