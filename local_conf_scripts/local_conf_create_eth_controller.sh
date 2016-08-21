@@ -61,7 +61,7 @@ PUBLIC_INTERFACE=${public_interface}
 PUBLIC_BRIDGE=br-ex
 PHYSICAL_INTERFACE=${mlnx_port}
 OVS_BRIDGE_MAPPINGS=default:br-p5p1,public:br-ex
-ML2_VLAN_RANGES=default:$TENANT_VLAN_RANGE
+ML2_VLAN_RANGES=default:\$TENANT_VLAN_RANGE
 
 disable_service h-eng h-api h-api-cfn h-api-cw n-net n-cpu
 enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon
