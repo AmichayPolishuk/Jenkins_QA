@@ -18,4 +18,4 @@ NETWORK=10.209.86.0
 PREFIX=24
 IPADDR='${public_interface_ip}'
 EOF'
-sudo systemctl restart network
+sudo ifconfig $public_interface $public_interface_ip/$(echo $floating_range | cut -d'/' -f2)
