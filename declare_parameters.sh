@@ -5,7 +5,7 @@ if [ -z "$(ofed_info -s)" ]; then
     exit 1
 fi
 
-public_interface=$(ip link show | grep -e "^3:" | awk '{print $2}' | cut -d':' -f1) 
+public_interface=$(/usr/sbin/ip link show | grep -e "^3:" | awk '{print $2}' | cut -d':' -f1) 
 export public_interface
 echo $public_interface
 
