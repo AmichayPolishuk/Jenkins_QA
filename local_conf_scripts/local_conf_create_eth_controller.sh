@@ -60,7 +60,7 @@ Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS=public
 PUBLIC_INTERFACE=${public_interface}
 PUBLIC_BRIDGE=br-ex
 PHYSICAL_INTERFACE=${mlnx_port}
-OVS_BRIDGE_MAPPINGS=default:br-p5p1,public:br-ex
+OVS_BRIDGE_MAPPINGS=default:br-${mlnx_port},public:br-ex
 ML2_VLAN_RANGES=default:\$TENANT_VLAN_RANGE
 
 disable_service h-eng h-api h-api-cfn h-api-cw n-net n-cpu
