@@ -31,6 +31,7 @@ LOGDAYS=1
 SERVICE_TOKEN=servicetoken
 
 # Neutron
+mlnx_port=`ip link show |grep -a2 vf |head -n1 |awk '{print \$2}' |tr -d :`
 Q_PLUGIN=ml2
 Q_AGENT=openvswitch
 Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch,sriovnicswitch
