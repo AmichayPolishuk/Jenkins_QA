@@ -39,8 +39,10 @@ Q_USE_DEBUG_COMMAND=True
 Q_USE_SECGROUP=True
 ENABLE_TENANT_VLANS=True
 Q_ML2_PLUGIN_TYPE_DRIVERS=vlan
-ENABLE_TENANT_TUNNELS=False
 Q_ML2_TENANT_NETWORK_TYPE=vlan
+ENABLE_TENANT_TUNNELS=False
+
+# Interfaces
 PHYSICAL_NETWORK=default
 PHYSICAL_INTERFACE=${mlnx_port}
 OVS_PHYSICAL_BRIDGE=br-${mlnx_port}
@@ -59,9 +61,12 @@ enable_plugin neutron git://git.openstack.org/openstack/neutron
 # Services
 ENABLED_SERVICES=n-cpu,q-agt,n-api-meta,q-sriov-agt
 USE_SCREEN=True
+
+# Extra
+mlnx_dev=`lspci |grep Mell|head -n1|awk '{print \$1}' |  sed s/\.0\$//g`
 [[post-config|\$NOVA_CONF]]
 [DEFAULT]
-pci_passthrough_whitelist ={"'"address"'":"'"*:'"${mlnx_dev}"'.*"'","'"physical_network"'":"'"default"'"}
+pci_passthrough_whitelist ={"'"address"'":"'"*:'"\${mlnx_dev}"'.*"'","'"physical_network"'":"'"default"'"}
 EOF
 exit 0
 
