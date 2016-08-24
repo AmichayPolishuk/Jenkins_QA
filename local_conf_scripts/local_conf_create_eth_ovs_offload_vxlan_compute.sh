@@ -1,3 +1,17 @@
+#!/bin/bash
+# Debug Session
+if [ ${DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+
+# Error Handling
+set -eu
+set -o pipefail
+
+echo "========================================="
+echo " Create&Edit local.conf for Compute Node "
+echo "========================================="
+cat > /opt/stack/devstack/local.conf << EOF
 [[local|localrc]]
 MULTI_HOST=1
 ADMIN_PASSWORD=password
@@ -47,4 +61,5 @@ pci_passthrough_whitelist ={"'"address"'":"'"*:'"${mlnx_dev}"'.*"'","'"physical_
 [[post-config|/$Q_PLUGIN_CONF_FILE]]
 [ovs]
 local_ip=192.169.0.112
-
+EOF
+exit 0
