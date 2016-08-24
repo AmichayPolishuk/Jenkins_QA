@@ -19,14 +19,18 @@ MYSQL_PASSWORD=password
 RABBIT_PASSWORD=password
 SERVICE_PASSWORD=password
 HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
+
 # Logging
 LOGDIR=\${LOGDIR:-/opt/stack/logs}
 LOGFILE=\$LOGDIR/stack.sh.log
 LOG_COLOR=False
 RECLONE=yes
 LOGDAYS=1
+
 # Keystone
 SERVICE_TOKEN=servicetoken
+
+# Neutron
 Q_PLUGIN=ml2
 Q_AGENT=openvswitch
 Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch,sriovnicswitch
