@@ -57,7 +57,10 @@ NOVA_VNC_ENABLED=True
 NOVNCPROXY_URL="http://${controller_ip_address}:6080/vnc_auto.html"
 VNCSERVER_LISTEN=0.0.0.0
 VNCSERVER_PROXYCLIENT_ADDRESS=\$VNCSERVER_LISTEN
+
+# Plugins
 enable_plugin neutron git://git.openstack.org/openstack/neutron 
+
 # Services
 ENABLED_SERVICES=n-cpu,q-agt,n-api-meta,q-sriov-agt
 USE_SCREEN=True
