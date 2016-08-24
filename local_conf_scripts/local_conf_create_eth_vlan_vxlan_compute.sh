@@ -1,3 +1,17 @@
+#!/bin/bash
+# Debug Session
+if [ ${DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+
+# Error Handling
+set -eu
+set -o pipefail
+
+echo "========================================="
+echo " Create&Edit local.conf for Compute Node "
+echo "========================================="
+cat > /opt/stack/devstack/local.conf << EOF
 [[local|localrc]]
 MULTI_HOST=1
 ADMIN_PASSWORD=password
@@ -51,4 +65,5 @@ mlnx_dev=`lspci |grep Mell|head -n1|awk '{print $1}' |  sed s/\.0$//g`
 [[post-config|$NOVA_CONF]]
 [DEFAULT]
 pci_passthrough_whitelist =[{"'"address"'":"'"*:'"${mlnx_dev}"'.1"'","'"physical_network"'":"null"},{"'"address"'":"'"*:'"${mlnx_dev}"'.2"'","'"physical_network"'":"null"},{"'"address"'":"'"*:'"${mlnx_dev}"'.3"'","'"physical_network"'":"'"default"'"},{"'"address"'":"'"*:'"${mlnx_dev}"'.4"'","'"physical_network"'":"'"default"'"}]
-
+EOF
+exit 0
