@@ -44,6 +44,8 @@ Q_ML2_TENANT_NETWORK_TYPE=vlan
 PHYSICAL_NETWORK=default
 PHYSICAL_INTERFACE=${mlnx_port}
 OVS_PHYSICAL_BRIDGE=br-${mlnx_port}
+
+#
 SERVICE_HOST=${controller_ip_address}
 MYSQL_HOST=${controller_ip_address}
 RABBIT_HOST=${controller_ip_address}
