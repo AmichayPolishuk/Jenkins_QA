@@ -51,23 +51,23 @@ if [ -n "$(lspci | grep ConnectX-3)" ]; then
     exit 1
 
 elif [ -n  "$(lspci | grep ConnectX-4)" ]; then
+	if [ $FABRIC_TYPE == "InfiniBand" ]; then
+		sed -i  -e 's/E_IPOIB_LOAD=no/E_IPOIB_LOAD=yes/g' /etc/infiniband/openib.conf
+	fi
     # Check crontab file existance
     if [ ! "$(crontab -l)" ]; then
         [ ! "$(crontab -l | { cat; echo ""; } | crontab - )"]
     fi
-    
     # Check the Physical Port Number 
     ports_number=$(lspci | grep -c "\[ConnectX-4")
     if [ $ports_number == 1 ]; then
         crontab -l | { cat; echo "@reboot sleep 60 && echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs"; } | crontab -
         exit 0
     fi
-
     if [ $ports_number == 2 ]; then
         crontab -l | { cat; echo "@reboot sleep 60 && echo 4 > /sys/class/infiniband/mlx5_0/device/sriov_numvfs"; } | crontab - 
         crontab -l | { cat; echo "@reboot sleep 60 && echo 4 > /sys/class/infiniband/mlx5_1/device/sriov_numvfs"; } | crontab - 
         exit 0
     fi
-
 fi 
 exit 1
