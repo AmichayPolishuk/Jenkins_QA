@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 export controller_ip_address=10.209.24.129
-export floating_allocation_pool_start=10.209.25.180
-export floating_allocation_pool_end=10.209.25.189
+export public_gateway=10.209.86.1
+export floating_range=10.209.86.0/24
+export public_interface_ip=10.209.86.83
+export floating_allocation_pool_start=10.209.86.84
+export floating_allocation_pool_end=10.209.86.94
 export vlan_pool_start=61
 export vlan_pool_end=70
 
