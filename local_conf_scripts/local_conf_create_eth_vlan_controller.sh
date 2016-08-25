@@ -77,9 +77,11 @@ PUBLIC_BRIDGE=br-ex
 # Services
 disable_service h-eng h-api h-api-cfn h-api-cw n-net n-cpu
 enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon
+enable_service tempest
+
+# Plugins
 enable_plugin neutron_ml2_mlnx git://github.com/openstack/networking-mlnx 
 enable_plugin neutron git://git.openstack.org/openstack/neutron 
-enable_service tempest
 
 # Extra
 [[post-config|\$NOVA_CONF]]
