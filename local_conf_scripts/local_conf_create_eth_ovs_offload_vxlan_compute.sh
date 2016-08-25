@@ -44,7 +44,9 @@ Q_ML2_PLUGIN_TYPE_DRIVERS=vxlan
 Q_ML2_TENANT_NETWORK_TYPE=vxlan
 
 # Interfaces
+mlnx_port=`ip link show |grep -a2 vf |head -n1 |awk '{print \$2}' |tr -d :`
 TUNNEL_ENDPOINT_IP=${tunnel_endpoint_ip}
+TUNNEL_ENDPOINT_INTERFACE=\$mlnx_port
 
 #
 SERVICE_HOST=${controller_ip_address}
