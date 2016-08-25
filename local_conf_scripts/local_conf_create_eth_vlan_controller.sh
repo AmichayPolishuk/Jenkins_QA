@@ -66,12 +66,12 @@ Q_FLOATING_ALLOCATION_POOL=start=${floating_allocation_pool_start},end=${floatin
 
 # Interfaces
 PHYSICAL_NETWORK=default
-OVS_BRIDGE_MAPPINGS=default:br-${mlnx_port},public:br-ex
 PHYSICAL_INTERFACE=${mlnx_port}
 OVS_PHYSICAL_BRIDGE=br-${mlnx_port}
 PUBLIC_PHYSICAL_NETWORK=public
 PUBLIC_INTERFACE=${public_interface}
 PUBLIC_BRIDGE=br-ex
+OVS_BRIDGE_MAPPINGS=default:br-${mlnx_port},public:br-ex
 
 
 # Services
