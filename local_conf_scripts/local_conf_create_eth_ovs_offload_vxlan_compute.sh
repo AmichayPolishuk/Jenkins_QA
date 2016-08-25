@@ -18,14 +18,19 @@ ADMIN_PASSWORD=password
 MYSQL_PASSWORD=password
 RABBIT_PASSWORD=password
 SERVICE_PASSWORD=password
-HOST_IP=$(host $(hostname) | cut -d ' ' -f4)
+HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
+
+# Branch's
 NEUTRON_BRANCH=refs/changes/16/275616/5
 NOVA_BRANCH=refs/changes/24/275624/14
+
 # Logging
-LOGDIR=${LOGDIR:-/opt/stack/logs}
-LOGFILE=$LOGDIR/stack.sh.log
+LOGDIR=\${LOGDIR:-/opt/stack/logs}
+LOGFILE=\$LOGDIR/stack.sh.log
 LOG_COLOR=False
 RECLONE=yes
+LOGDAYS=1
+
 # Keystone
 SERVICE_TOKEN=servicetoken
 
