@@ -36,7 +36,6 @@ RECLONE=no
 VOLUME_BACKING_FILE_SIZE=10000M
 
 # Neutron
-mlnx_port=`ip link show |grep -a2 vf |head -n1 |awk '{print \$2}' |tr -d :`
 SERVICE_TOKEN=servicetoken                                                            
 Q_PLUGIN=ml2                                                                          
 Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch,sriovnicswitch                             
@@ -65,6 +64,8 @@ FLOATING_RANGE=${floating_range}
 Q_FLOATING_ALLOCATION_POOL=start=${floating_allocation_pool_start},end=${floating_allocation_pool_end}
 
 # Interfaces
+mlnx_port=`ip link show |grep -a2 vf |head -n1 |awk '{print \$2}' |tr -d :`
+public_interface=`ip link show | grep -e "^3:" | awk '{print \$2}' | cut -d':' -f1`
 PHYSICAL_NETWORK=default
 PHYSICAL_INTERFACE=\${mlnx_port}
 OVS_PHYSICAL_BRIDGE=br-\${mlnx_port}
