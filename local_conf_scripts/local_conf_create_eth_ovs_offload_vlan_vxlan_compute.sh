@@ -50,7 +50,7 @@ OVS_ENABLE_TUNNELING=True
 PHYSICAL_NETWORK=default
 PHYSICAL_INTERFACE=${mlnx_port}
 OVS_PHYSICAL_BRIDGE=br-${mlnx_port}
-TUNNEL_ENDPOINT_IP=10.10.10.3
+TUNNEL_ENDPOINT_IP=${tunnel_endpoint_ip}
 
 #
 SERVICE_HOST=${controller_ip_address}
