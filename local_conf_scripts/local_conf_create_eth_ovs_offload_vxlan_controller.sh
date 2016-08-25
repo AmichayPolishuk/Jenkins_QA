@@ -21,17 +21,22 @@ ADMIN_PASSWORD=password
 MYSQL_PASSWORD=password
 RABBIT_PASSWORD=password
 SERVICE_PASSWORD=password
-HOST_IP=$(host $(hostname) | cut -d ' ' -f4)
-NEUTRON_BRANCH=refs/changes/16/275616/5
-NOVA_BRANCH=refs/changes/24/275624/14
+HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
+
 # Logging
 LOGDIR=/opt/stack/logs
 LOGFILE=$LOGDIR/stack.sh.log
 LOG_COLOR=False
-RECLONE=yes
 LOGDAYS=1
+
+# GIT
+RECLONE=no
+NEUTRON_BRANCH=refs/changes/16/275616/5
+NOVA_BRANCH=refs/changes/24/275624/14
+
 # Cinder
 VOLUME_BACKING_FILE_SIZE=10000M
+
 # Neutron
 SERVICE_TOKEN=servicetoken
 Q_PLUGIN=ml2        
@@ -41,38 +46,41 @@ Q_USE_DEBUG_COMMAND=False
 Q_USE_SECGROUP=True
 Q_ML2_PLUGIN_TYPE_DRIVERS=flat,vxlan
 Q_ML2_TENANT_NETWORK_TYPE=vxlan
-PHYSICAL_NETWORK=public
 NETWORK_API_EXTENSIONS=dhcp_agent_scheduler,external-net,ext-gw-mode,binding,quotas,agent,l3_agent_scheduler,provider,router,extraroute,security-group
-OVS_PHYSICAL_BRIDGE=br-ex
 ALLOW_NEUTRON_DB_MIGRATIONS=true
+Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS=public
+
+# Networks
 IP_VERSION=4
 FIXED_RANGE="192.168.1.0/24"
 NETWORK_GATEWAY=192.168.1.1
 PROVIDER_SUBNET_NAME=private_network
 PROVIDER_NETWORK_TYPE=vxlan
-PUBLIC_NETWORK_GATEWAY=10.209.86.1
-FLOATING_RANGE=10.209.86.0/24
-Q_FLOATING_ALLOCATION_POOL=start=10.209.86.13,end=10.209.86.24
 Q_USE_PROVIDERNET_FOR_PUBLIC=True
-PUBLIC_PHYSICAL_NETWORK=public
-Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS=public
-PUBLIC_INTERFACE=eno2
+PUBLIC_NETWORK_GATEWAY=${public_gateway}
+FLOATING_RANGE=${floating_range}
+Q_FLOATING_ALLOCATION_POOL=start=${floating_allocation_pool_start},end=${floating_allocation_pool_end}
+
+# Interfaces
+mlnx_port=`ip link show |grep -a2 vf |head -n1 |awk '{print \$2}' |tr -d :`
+public_interface=`ip link show | grep -e "^3:" | awk '{print \$2}' | cut -d':' -f1`
+PHYSICAL_INTERFACE=\${mlnx_port}
+PUBLIC_INTERFACE=\${public_interface}
 PUBLIC_BRIDGE=br-ex
+PUBLIC_PHYSICAL_NETWORK=public
 OVS_BRIDGE_MAPPINGS=public:br-ex
 
+# Services
 disable_service h-eng h-api h-api-cfn h-api-cw n-net n-cpu
 enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon
 enable_service tempest
 USE_SCREEN=True
 
-[[post-config|$NOVA_CONF]]
+# Extra
+[[post-config|\$NOVA_CONF]]
 [DEFAULT]
 scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters = RetryFilter, AvailabilityZoneFilter, RamFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, PciPassthroughFilter
-
-[[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
-[ovs]
-local_ip=192.169.0.111
 
 [[post-config|/etc/cinder/cinder.conf]]
 [DEFAULT]
