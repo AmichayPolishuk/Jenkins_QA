@@ -22,15 +22,21 @@ MYSQL_PASSWORD=password
 RABBIT_PASSWORD=password
 SERVICE_PASSWORD=password
 HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
+
 # Logging
 LOGDIR=/opt/stack/logs
 LOGFILE=\$LOGDIR/stack.sh.log
 LOG_COLOR=False
-RECLONE=yes
 LOGDAYS=1
+
+# GIT
+RECLONE=yes
+
 # Cinder
 VOLUME_BACKING_FILE_SIZE=10000M
+
 # Neutron
+mlnx_port=`ip link show |grep -a2 vf |head -n1 |awk '{print \$2}' |tr -d :`
 SERVICE_TOKEN=servicetoken                                                            
 Q_PLUGIN=ml2                                                                          
 Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch,sriovnicswitch                             
@@ -41,34 +47,41 @@ ENABLE_TENANT_VLANS=True
 Q_ML2_PLUGIN_TYPE_DRIVERS=flat,vlan
 ENABLE_TENANT_TUNNELS=False
 Q_ML2_TENANT_NETWORK_TYPE=vlan
-PHYSICAL_NETWORK=public
 TENANT_VLAN_RANGE=${vlan_pool_start}:${vlan_pool_end}
 NETWORK_API_EXTENSIONS=dhcp_agent_scheduler,external-net,ext-gw-mode,binding,quotas,agent,l3_agent_scheduler,provider,router,extraroute,security-group
-OVS_PHYSICAL_BRIDGE=br-ex
 ALLOW_NEUTRON_DB_MIGRATIONS=true
+Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS=public
+ML2_VLAN_RANGES=default:\$TENANT_VLAN_RANGE
+
+# Networks
 IP_VERSION=4
 FIXED_RANGE="192.168.1.0/24"
 NETWORK_GATEWAY=192.168.1.1
 PROVIDER_SUBNET_NAME=private_network
 PROVIDER_NETWORK_TYPE=vlan
+Q_USE_PROVIDERNET_FOR_PUBLIC=True
 PUBLIC_NETWORK_GATEWAY=${public_gateway}
 FLOATING_RANGE=${floating_range}
 Q_FLOATING_ALLOCATION_POOL=start=${floating_allocation_pool_start},end=${floating_allocation_pool_end}
-Q_USE_PROVIDERNET_FOR_PUBLIC=True
+
+# Interfaces
+PHYSICAL_NETWORK=default
+OVS_BRIDGE_MAPPINGS=default:br-${mlnx_port},public:br-ex
+PHYSICAL_INTERFACE=${mlnx_port}
+OVS_PHYSICAL_BRIDGE=br-${mlnx_port}
 PUBLIC_PHYSICAL_NETWORK=public
-Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS=public
 PUBLIC_INTERFACE=${public_interface}
 PUBLIC_BRIDGE=br-ex
-PHYSICAL_INTERFACE=${mlnx_port}
-OVS_BRIDGE_MAPPINGS=default:br-${mlnx_port},public:br-ex
-ML2_VLAN_RANGES=default:\$TENANT_VLAN_RANGE
 
+
+# Services
 disable_service h-eng h-api h-api-cfn h-api-cw n-net n-cpu
 enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon
 enable_plugin neutron_ml2_mlnx git://github.com/openstack/networking-mlnx 
 enable_plugin neutron git://git.openstack.org/openstack/neutron 
 enable_service tempest
 
+# Extra
 [[post-config|\$NOVA_CONF]]
 [DEFAULT]
 scheduler_available_filters=nova.scheduler.filters.all_filters
