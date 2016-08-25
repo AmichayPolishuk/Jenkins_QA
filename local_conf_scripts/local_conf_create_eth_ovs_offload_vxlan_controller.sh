@@ -69,6 +69,8 @@ PUBLIC_INTERFACE=\${public_interface}
 PUBLIC_BRIDGE=br-ex
 PUBLIC_PHYSICAL_NETWORK=public
 OVS_BRIDGE_MAPPINGS=public:br-ex
+TUNNEL_ENDPOINT_IP=${tunnel_endpoint_ip}
+TUNNEL_ENDPOINT_INTERFACE=\${PHYSICAL_INTERFACE}
 
 # Services
 disable_service h-eng h-api h-api-cfn h-api-cw n-net n-cpu
