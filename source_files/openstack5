@@ -1,9 +1,10 @@
-controller_nodes=r-smg42
-controller_ip_address=10.209.24.127
-compute_nodes=r-smg43,r-smg44
-cinder_nodes=r-smg42
-setup_type=ib
-floating_allocation_pool_start=10.209.25.160
-floating_allocation_pool_end=10.209.25.169
-vlan_pool_start=41
-vlan_pool_end=50
+#!/usr/bin/env bash
+export controller_ip_address=10.209.24.127
+export public_gateway=10.209.86.1
+export floating_range=10.209.86.0/24
+export public_interface_ip=10.209.86.71
+export floating_allocation_pool_start=10.209.86.72
+export floating_allocation_pool_end=10.209.86.82
+export vlan_pool_start=51
+export vlan_pool_end=60
+
