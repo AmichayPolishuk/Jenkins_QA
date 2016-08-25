@@ -1,3 +1,17 @@
+#!/bin/bash
+# Debug Session
+if [ ${DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+
+# Error Handling
+set -eu
+set -o pipefail
+
+echo "==========================================================="
+echo " Create&Edit local.conf for Controller-Network-Cinder Node "
+echo "==========================================================="
+cat > /opt/stack/devstack/local.conf << EOF
 [[local|localrc]]
 DOWNLOAD_DEFAULT_IMAGES=False
 IMAGE_URLS="http://10.209.24.107/images/mellanox-ubuntu-xenial-OFED3.3-1.5.0.0.qcow2,"
@@ -75,3 +89,5 @@ volume_group = stack-volumes-lvmdriver-1
 [[post-extra|$TEMPEST_CONFIG]]
 [network]
 port_vnic_type=direct
+EOF
+exit 0
