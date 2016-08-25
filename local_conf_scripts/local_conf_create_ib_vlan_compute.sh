@@ -48,6 +48,9 @@ PHYSICAL_NETWORK=default
 PHYSICAL_INTERFACE=${epioib_port}
 OVS_PHYSICAL_BRIDGE=br-${epioib_port}
 
+# IB - eswitchd mapping
+PHYSICAL_INTERFACE_MAPPINGS=default:${mlnx_port}
+
 #
 SERVICE_HOST=${controller_ip_address}
 MYSQL_HOST=${controller_ip_address}
