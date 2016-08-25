@@ -48,10 +48,10 @@ ENABLE_TENANT_TUNNELS=False
 Q_ML2_PLUGIN_TYPE_DRIVERS=flat,vlan
 Q_ML2_TENANT_NETWORK_TYPE=vlan
 TENANT_VLAN_RANGE=${vlan_pool_start}:${vlan_pool_end}
+ML2_VLAN_RANGES=default:\$TENANT_VLAN_RANGE
 NETWORK_API_EXTENSIONS=dhcp_agent_scheduler,external-net,ext-gw-mode,binding,quotas,agent,l3_agent_scheduler,provider,router,extraroute,security-group
 ALLOW_NEUTRON_DB_MIGRATIONS=true
 Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS=public
-ML2_VLAN_RANGES=default:\$TENANT_VLAN_RANGE
 
 # Networks
 IP_VERSION=4
