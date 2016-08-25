@@ -51,6 +51,7 @@ PHYSICAL_NETWORK=default
 PHYSICAL_INTERFACE=${mlnx_port}
 OVS_PHYSICAL_BRIDGE=br-${mlnx_port}
 TUNNEL_ENDPOINT_IP=${tunnel_endpoint_ip}
+TUNNEL_ENDPOINT_INTERFACE=\${OVS_PHYSICAL_BRIDGE}
 
 #
 SERVICE_HOST=${controller_ip_address}
