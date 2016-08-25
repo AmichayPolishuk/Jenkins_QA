@@ -43,28 +43,28 @@ Q_USE_SECGROUP=True
 Q_ML2_PLUGIN_TYPE_DRIVERS=vxlan
 Q_ML2_TENANT_NETWORK_TYPE=vxlan
 
+# Interfaces
+TUNNEL_ENDPOINT_IP=${tunnel_endpoint_ip}
+
 #
-SERVICE_HOST=10.209.24.104
-MYSQL_HOST=10.209.24.104
-RABBIT_HOST=10.209.24.104
-Q_HOST=10.209.24.104
-GLANCE_HOSTPORT=10.209.24.104:9292
+SERVICE_HOST=${controller_ip_address}
+MYSQL_HOST=${controller_ip_address}
+RABBIT_HOST=${controller_ip_address}
+Q_HOST=${controller_ip_address}
+GLANCE_HOSTPORT=${controller_ip_address}:9292
 NOVA_VNC_ENABLED=True
-NOVNCPROXY_URL="http://10.209.24.104:6080/vnc_auto.html"
+NOVNCPROXY_URL="http://${controller_ip_address}:6080/vnc_auto.html"
 VNCSERVER_LISTEN=0.0.0.0
-VNCSERVER_PROXYCLIENT_ADDRESS=$VNCSERVER_LISTEN
+VNCSERVER_PROXYCLIENT_ADDRESS=\$VNCSERVER_LISTEN
 
 # Services
 ENABLED_SERVICES=n-cpu,q-agt,n-api-meta
 USE_SCREEN=True
 
-#
-mlnx_dev=`lspci |grep Mell|head -n1|awk '{print $1}' |  sed s/\.0$//g`
+# Extra
+mlnx_dev=`lspci |grep Mell|head -n1|awk '{print $1}' |  sed s/\.0\$//g`
 [[post-config|$NOVA_CONF]]
 [DEFAULT]
 pci_passthrough_whitelist ={"'"address"'":"'"*:'"${mlnx_dev}"'.*"'","'"physical_network"'":"null"}
-[[post-config|/$Q_PLUGIN_CONF_FILE]]
-[ovs]
-local_ip=192.169.0.112
 EOF
 exit 0
