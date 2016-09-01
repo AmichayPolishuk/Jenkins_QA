@@ -44,6 +44,7 @@ Q_USE_SECGROUP=True
 ENABLE_TENANT_VLANS=True
 Q_ML2_PLUGIN_TYPE_DRIVERS=vxlan,vlan
 Q_ML2_TENANT_NETWORK_TYPE=vxlan,vlan
+Q_TUNNEL_TYPES=vxlan
 OVS_ENABLE_TUNNELING=True
 
 # Interfaces
@@ -70,7 +71,7 @@ USE_SCREEN=True
 
 # Extra
 mlnx_dev=`lspci |grep Mell|head -n1|awk '{print \$1}' |  sed s/\.0\$//g`
-[[post-config|$NOVA_CONF]]
+[[post-config|\$NOVA_CONF]]
 [DEFAULT]
 pci_passthrough_whitelist =[{"'"address"'":"'"*:'"\${mlnx_dev}"'.1"'","'"physical_network"'":"null"},{"'"address"'":"'"*:'"\${mlnx_dev}"'.2"'","'"physical_network"'":"null"},{"'"address"'":"'"*:'"\${mlnx_dev}"'.3"'","'"physical_network"'":"'"default"'"},{"'"address"'":"'"*:'"\${mlnx_dev}"'.4"'","'"physical_network"'":"'"default"'"}]
 EOF
