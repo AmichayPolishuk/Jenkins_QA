@@ -49,6 +49,8 @@ Q_ML2_TENANT_NETWORK_TYPE=vxlan
 NETWORK_API_EXTENSIONS=dhcp_agent_scheduler,external-net,ext-gw-mode,binding,quotas,agent,l3_agent_scheduler,provider,router,extraroute,security-group
 ALLOW_NEUTRON_DB_MIGRATIONS=true
 Q_ML2_PLUGIN_FLAT_TYPE_OPTIONS=public
+Q_TUNNEL_TYPES=vxlan
+OVS_ENABLE_TUNNELING=True
 
 # Networks
 IP_VERSION=4
