@@ -104,7 +104,7 @@ volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
 volume_backend_name = backend1
 volume_group = stack-volumes-lvmdriver-1
 
-[[post-extra|$TEMPEST_CONFIG]]
+[[post-extra|\$TEMPEST_CONFIG]]
 [network]
 port_vnic_type=direct
 EOF
