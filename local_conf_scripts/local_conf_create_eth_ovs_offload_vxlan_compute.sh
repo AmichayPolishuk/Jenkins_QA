@@ -65,7 +65,7 @@ USE_SCREEN=True
 
 # Extra
 mlnx_dev=`lspci |grep Mell|head -n1|awk '{print $1}' |  sed s/\.0\$//g`
-[[post-config|$NOVA_CONF]]
+[[post-config|\$NOVA_CONF]]
 [DEFAULT]
 pci_passthrough_whitelist ={"'"address"'":"'"*:'"${mlnx_dev}"'.*"'","'"physical_network"'":"null"}
 EOF
