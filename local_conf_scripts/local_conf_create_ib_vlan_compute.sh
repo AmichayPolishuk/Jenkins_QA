@@ -76,5 +76,9 @@ enable_plugin neutron_ml2_mlnx git://github.com/openstack/networking-mlnx
 [[post-config|\$NOVA_CONF]]
 [DEFAULT]
 pci_passthrough_whitelist ={"'"address"'":"'"*:'"${mlnx_dev}"'.*"'","'"physical_network"'":"'"default"'"}
+
+[[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
+[ovs]
+of_interface=ovs-ofctl
 EOF
 exit 0    
