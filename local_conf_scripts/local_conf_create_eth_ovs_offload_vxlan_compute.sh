@@ -24,7 +24,7 @@ HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
 PIP_UPGRADE=True
 
 # GIT
-RECLONE=yes
+RECLONE=no
 NEUTRON_BRANCH=refs/changes/16/275616/5
 NOVA_BRANCH=refs/changes/24/275624/14
 
