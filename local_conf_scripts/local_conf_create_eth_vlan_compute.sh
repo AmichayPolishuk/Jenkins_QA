@@ -20,11 +20,16 @@ RABBIT_PASSWORD=password
 SERVICE_PASSWORD=password
 HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
 
+# Stack
+PIP_UPGRADE=True
+
+# GIT
+RECLONE=yes
+
 # Logging
 LOGDIR=\${LOGDIR:-/opt/stack/logs}
 LOGFILE=\$LOGDIR/stack.sh.log
 LOG_COLOR=False
-RECLONE=yes
 LOGDAYS=1
 
 # Keystone
