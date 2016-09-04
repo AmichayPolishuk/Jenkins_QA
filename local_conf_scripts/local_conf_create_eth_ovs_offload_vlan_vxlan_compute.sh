@@ -24,11 +24,14 @@ HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
 NEUTRON_BRANCH=refs/changes/16/275616/5
 NOVA_BRANCH=refs/changes/24/275624/14
 
+# Stack
+RECLONE=no
+PIP_UPGRADE=True
+
 # Logging
 LOGDIR=\${LOGDIR:-/opt/stack/logs}
 LOGFILE=\$LOGDIR/stack.sh.log
 LOG_COLOR=False
-RECLONE=yes
 LOGDAYS=1
 
 # Keystone
