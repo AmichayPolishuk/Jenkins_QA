@@ -25,8 +25,10 @@ NEUTRON_BRANCH=refs/changes/16/275616/5
 NOVA_BRANCH=refs/changes/24/275624/14
 
 # Stack
-RECLONE=no
 PIP_UPGRADE=True
+
+# GIT
+RECLONE=no
 
 # Logging
 LOGDIR=\${LOGDIR:-/opt/stack/logs}
