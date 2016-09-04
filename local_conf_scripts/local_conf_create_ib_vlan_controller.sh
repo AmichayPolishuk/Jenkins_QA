@@ -29,6 +29,9 @@ LOGFILE=\$LOGDIR/stack.sh.log
 LOG_COLOR=False
 LOGDAYS=1
 
+# Stack
+PIP_UPGRADE=True
+
 # GIT
 RECLONE=no
 
