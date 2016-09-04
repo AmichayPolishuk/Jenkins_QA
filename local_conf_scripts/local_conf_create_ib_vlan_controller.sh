@@ -104,5 +104,9 @@ iscsi_protocol = iser
 volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
 volume_backend_name = iser
 volume_group = stack-volumes
+
+[[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
+[ovs]
+of_interface=ovs-ofctl 
 EOF
 exit 0
