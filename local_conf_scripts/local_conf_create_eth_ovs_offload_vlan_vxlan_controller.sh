@@ -26,16 +26,16 @@ HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
 # Stack
 PIP_UPGRADE=True
 
+# GIT
+RECLONE=no
+NEUTRON_BRANCH=refs/changes/16/275616/5
+NOVA_BRANCH=refs/changes/24/275624/14
+
 # Logging
 LOGDIR=/opt/stack/logs
 LOGFILE=\$LOGDIR/stack.sh.log
 LOG_COLOR=False
 LOGDAYS=1
-
-# GIT
-RECLONE=no
-NEUTRON_BRANCH=refs/changes/16/275616/5
-NOVA_BRANCH=refs/changes/24/275624/14
 
 # Cinder
 VOLUME_BACKING_FILE_SIZE=10000M
