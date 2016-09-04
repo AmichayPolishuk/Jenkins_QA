@@ -23,14 +23,17 @@ RABBIT_PASSWORD=password
 SERVICE_PASSWORD=password
 HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
 
+# Stack
+PIP_UPGRADE=True
+
+# GIT
+RECLONE=no
+
 # Logging
 LOGDIR=/opt/stack/logs
 LOGFILE=\$LOGDIR/stack.sh.log
 LOG_COLOR=False
 LOGDAYS=1
-
-# GIT
-RECLONE=no
 
 # Cinder
 VOLUME_BACKING_FILE_SIZE=10000M
