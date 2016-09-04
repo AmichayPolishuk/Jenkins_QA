@@ -23,6 +23,9 @@ RABBIT_PASSWORD=password
 SERVICE_PASSWORD=password
 HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
 
+# Stack
+PIP_UPGRADE=True
+
 # Logging
 LOGDIR=/opt/stack/logs
 LOGFILE=\$LOGDIR/stack.sh.log
