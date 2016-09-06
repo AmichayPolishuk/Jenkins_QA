@@ -13,7 +13,8 @@ set -o pipefail
 # Install before OFED Installation
 subscription-manager register --username openstack_mlnx --password openstack_mlnx_2015 --auto-attach
 subscription-manager repos --enable rhel-7-server-optional-rpms
-subscription-manager repos --enable rhel-7-server-extras-rpms 
+subscription-manager repos --enable rhel-7-server-extras-rpms
+yum-config-manager --disable rhel-7-fast-datapath-rpms
 yum update -y
 yum install -y lvm2 tigervnc
 
