@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export PATH=$PATH:/usr/sbin:/usr/bin
+
 # OFED must be installed
 if [ -z "$(ofed_info -s)" ]; then
     exit 1
