@@ -12,7 +12,7 @@ set -o pipefail
 
 # Update Cashe
 sudo apt-get update
-sudo apt-get -y upgrade
+sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y upgrade
 sudo apt-get install -y sshpass
 sudo apt-get install openvswitch-switch vncviewer -y
 
