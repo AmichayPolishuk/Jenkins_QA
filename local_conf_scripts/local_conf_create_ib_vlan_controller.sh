@@ -95,15 +95,15 @@ supported_pci_vendor_devs = 15b3:1004,15b3:1014,15b3:1016
 
 [[post-config|/etc/cinder/cinder.conf]]
 [DEFAULT]
-enabled_backends = iser
+enabled_backends = lvmdriver-1, backend1
 
-[iser]
+[backend1]
 iscsi_ip_address=1.1.1.1
 iscsi_helper=tgtadm
 iscsi_protocol = iser
 volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
-volume_backend_name = iser
-volume_group = stack-volumes
+volume_backend_name = backend1
+volume_group = stack-volumes-lvmdriver-1
 
 [[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
 [ovs]
