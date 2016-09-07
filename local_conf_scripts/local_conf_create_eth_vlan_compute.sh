@@ -71,7 +71,6 @@ ENABLED_SERVICES=n-cpu,q-agt,n-api-meta,q-sriov-agt
 USE_SCREEN=True
 
 # Extra
-mlnx_dev=`lspci |grep Mell|head -n1|awk '{print \$1}' |  sed s/\.0\$//g`
 [[post-config|\$NOVA_CONF]]
 [DEFAULT]
 pci_passthrough_whitelist ={"'"address"'":"'"*:'"\${mlnx_dev}"'.*"'","'"physical_network"'":"'"default"'"}
