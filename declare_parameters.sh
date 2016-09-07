@@ -1,41 +1,57 @@
 #!/usr/bin/env bash
-
 export PATH=$PATH:/usr/sbin:/usr/bin
+TMP_DEV=tmp_ibdev2netdev
+
+# Force Nic
+FORCE_NIC=${FORCE_NIC:-""}
 
 # OFED must be installed
 if [ -z "$(ofed_info -s)" ]; then
     exit 1
 fi
 
-public_interface=$(sudo ip link show | grep -e "^3:" | awk '{print $2}' | cut -d':' -f1) 
-export public_interface
-echo $public_interface
-
-CA=$(sudo ibstat -l | head -1)
-FABRIC_TYPE=$(sudo ibstat $CA 1 | grep layer | cut -d' ' -f3)
-
-# ConnectX-3
-if [ -n "$(sudo lspci | grep ConnectX-3)" ]; then
-    export HCA=${HCA:-"mlx4"}
-# ConnectX-4
-elif [ -n "$(sudo lspci | grep ConnectX-4)" ]; then
-    export HCA=${HCA:-"mlx5"}
+if [ -z "$(sudo ibdev2netdev -v > ${TMP_DEV})" ]; then
+    exit 1
 fi
 
-mlx=`echo $HCA | sed s/mlx//g`
-let mlx=mlx-1
-export mlnx_dev=`sudo lspci |grep Mell|grep "\-$mlx" |head -n1|awk '{print $1}' |  sed s/\.0\$//g`
+MT=""
+if [ ${FORCE_NIC} != "" ]; then
+    case "${FORCE_NIC}" in
+        CX4)
+            MT=MT4115
+            ;;
+        CX3)
+            MT=MT4103
+            ;;
+        LX)
+            MT=MT4117
+            ;;
+    esac
+fi
+
+if [ ${MT} == "" ]; then
+    MT=$(sudo cat $TMP_DEV | head -1 | awk '{print $3}' | cut -d'(' -f2)
+fi
+
+HCA=$(sudo cat $TMP_DEV | grep ${MT} | head -1 | awk '{print $2}')
+HCA_BUS=$(sudo cat $TMP_DEV | grep ${MT} | head -1 | awk '{print $1}')
+HCA_PORTS=$(sudo cat $TMP_DEV | grep ${MT} | wc -l)
+HCA_PORT_NAME=$(sudo cat $TMP_DEV | grep ${MT} | head -1 | awk '{print $17}')
+FABRIC_TYPE=$(ibstat $HCA 1 | grep layer | cut -d' ' -f3)
+export mlnx_dev=${HCA_BUS}
 echo $mlnx_dev
 
+sudo ip link set dev $HCA_PORT_NAME up
+
 if [ $FABRIC_TYPE == "Ethernet" ]; then
-    export mlnx_port=`sudo ibdev2netdev  | grep Up| awk '{print $5}'|head -n1`
+    export mlnx_port=${HCA_PORT_NAME}
     echo $mlnx_port
 fi
 
 if [ $FABRIC_TYPE == "InfiniBand" ]; then
-    export epioib_port=`sudo ibdev2netdev  | grep ${HCA}_0 | grep Up| awk '{print $5}'|head -n1`
+    export epioib_port=${HCA_PORT_NAME}
     echo $epioib_port
-    export mlnx_port=`sudo ibdev2netdev  | grep ${HCA}_0 | grep Up| grep ib| awk '{print $5}'|tail -n1`
+    export mlnx_port=$(sudo cat $TMP_DEV | grep ${MT} | head -2 | tail -1 | awk '{print $17}')
     echo $mlnx_port
 fi
 
