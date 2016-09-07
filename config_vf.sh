@@ -75,7 +75,6 @@ if [ ${MT} == "MT4103" ]; then
         exit 0
     fi
     exit 1
-
 elif [ ${MT} == "MT4115" ] || [ ${MT} == "MT4117" ]; then
     mst start;for dev in `mst status | grep mt411 | awk '{print $1}'`; do mlxconfig -y -d $dev set NUM_OF_VFS=${NUM_OF_VFS}; done
     if [ $FABRIC_TYPE == "InfiniBand" ]; then
