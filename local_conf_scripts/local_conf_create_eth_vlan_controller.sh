@@ -67,7 +67,6 @@ FLOATING_RANGE=${floating_range}
 Q_FLOATING_ALLOCATION_POOL=start=${floating_allocation_pool_start},end=${floating_allocation_pool_end}
 
 # Interfaces
-mlnx_port=`ip link show |grep -a2 vf |head -n1 |awk '{print \$2}' |tr -d :`
 public_interface=`ip link show | grep -e "^3:" | awk '{print \$2}' | cut -d':' -f1`
 PHYSICAL_NETWORK=default
 PHYSICAL_INTERFACE=\${mlnx_port}
