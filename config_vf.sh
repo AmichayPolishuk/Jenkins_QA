@@ -46,6 +46,9 @@ fi
 HCA_PORTS=$(sudo ibdev2netdev -v | grep ${MT} | wc -l)
 FABRIC_TYPE=$(ibstat $HCA 1 | grep layer | cut -d' ' -f3)
 
+# Burn SRIOV_EN and NUM_OF_VFS
+mst start;for dev in `mst status | grep mt | grep -v cr0 | awk '{print $1}'`; do mlxconfig -y -d $dev set SRIOV_EN=1 NUM_OF_VFS=${NUM_OF_VFS}; done
+
 # ConnectX-3 
 if [ ${MT} == "MT4103" ]; then
     if [ $FABRIC_TYPE == "Ethernet" ]; then
@@ -76,7 +79,6 @@ if [ ${MT} == "MT4103" ]; then
     fi
     exit 1
 elif [ ${MT} == "MT4115" ] || [ ${MT} == "MT4117" ]; then
-    mst start;for dev in `mst status | grep mt411 | awk '{print $1}'`; do mlxconfig -y -d $dev set NUM_OF_VFS=${NUM_OF_VFS}; done
     if [ $FABRIC_TYPE == "InfiniBand" ]; then
     	sed -i  -e 's/E_IPOIB_LOAD=no/E_IPOIB_LOAD=yes/g' /etc/infiniband/openib.conf
     fi
