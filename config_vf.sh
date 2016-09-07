@@ -10,10 +10,10 @@ set -eu
 set -o pipefail
 
 # Force Nic
-FORCE_NIC=$(FORCE_NIC:-)
+FORCE_NIC=${FORCE_NIC:-""}
 
 # Number of VF's to bring up
-NUM_OF_VFS=$(NUM_OF_VFS:-4)
+NUM_OF_VFS=${NUM_OF_VFS:-4}
 
 # OFED must be installed
 if [ -z "$(ofed_info -s)" ]; then
