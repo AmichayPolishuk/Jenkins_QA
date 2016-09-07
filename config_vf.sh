@@ -76,7 +76,7 @@ if [ ${MT} == "MT4103" ]; then
     fi
     exit 1
 
-elif [ ${MT} == "MT4115" ] || [ ${MT} == "MT4117" ]; then; then
+elif [ ${MT} == "MT4115" ] || [ ${MT} == "MT4117" ]; then
 	if [ $FABRIC_TYPE == "InfiniBand" ]; then
 		sed -i  -e 's/E_IPOIB_LOAD=no/E_IPOIB_LOAD=yes/g' /etc/infiniband/openib.conf
 	fi
