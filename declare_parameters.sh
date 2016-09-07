@@ -10,9 +10,7 @@ if [ -z "$(ofed_info -s)" ]; then
     exit 1
 fi
 
-if [ -z "$(sudo ibdev2netdev -v > ${TMP_DEV})" ]; then
-    exit 1
-fi
+sudo ibdev2netdev -v > ${TMP_DEV}
 
 MT=""
 if [ ${FORCE_NIC} != "" ]; then
