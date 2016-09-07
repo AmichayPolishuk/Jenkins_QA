@@ -77,22 +77,22 @@ if [ ${MT} == "MT4103" ]; then
     exit 1
 
 elif [ ${MT} == "MT4115" ] || [ ${MT} == "MT4117" ]; then
-	if [ $FABRIC_TYPE == "InfiniBand" ]; then
-		sed -i  -e 's/E_IPOIB_LOAD=no/E_IPOIB_LOAD=yes/g' /etc/infiniband/openib.conf
-	fi
+    if [ $FABRIC_TYPE == "InfiniBand" ]; then
+    	sed -i  -e 's/E_IPOIB_LOAD=no/E_IPOIB_LOAD=yes/g' /etc/infiniband/openib.conf
+    fi
     # Check crontab file existance
     if [ ! "$(crontab -l)" ]; then
         [ ! "$(crontab -l | { cat; echo ""; } | crontab - )"]
     fi
     # Check the Physical Port Number 
-    ports_number=$(lspci | grep -c "\[ConnectX-4")
-    if [ $ports_number == 1 ]; then
-        crontab -l | { cat; echo "@reboot sleep 60 && echo ${NUM_OF_VFS} > /sys/class/infiniband/mlx5_0/device/sriov_numvfs"; } | crontab -
+    if [ ${HCA_PORTS} == 1 ]; then
+        crontab -l | { cat; echo "@reboot sleep 60 && echo ${NUM_OF_VFS} > /sys/class/infiniband/${HCA}/device/sriov_numvfs"; } | crontab -
         exit 0
     fi
-    if [ $ports_number == 2 ]; then
-        crontab -l | { cat; echo "@reboot sleep 60 && echo ${NUM_OF_VFS} > /sys/class/infiniband/mlx5_0/device/sriov_numvfs"; } | crontab - 
-        crontab -l | { cat; echo "@reboot sleep 60 && echo ${NUM_OF_VFS} > /sys/class/infiniband/mlx5_1/device/sriov_numvfs"; } | crontab - 
+    if [ ${HCA_PORTS} == 2 ]; then
+        HCA2=$(sudo ibdev2netdev -v | grep ${MT} | tail -1 | awk '{print $2}')
+        crontab -l | { cat; echo "@reboot sleep 60 && echo ${NUM_OF_VFS} > /sys/class/infiniband/${HCA}/device/sriov_numvfs"; } | crontab - 
+        crontab -l | { cat; echo "@reboot sleep 60 && echo ${NUM_OF_VFS} > /sys/class/infiniband/${HCA2}/device/sriov_numvfs"; } | crontab - 
         exit 0
     fi
 fi 
