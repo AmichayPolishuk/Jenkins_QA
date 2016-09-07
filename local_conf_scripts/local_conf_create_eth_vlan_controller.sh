@@ -67,7 +67,6 @@ FLOATING_RANGE=${floating_range}
 Q_FLOATING_ALLOCATION_POOL=start=${floating_allocation_pool_start},end=${floating_allocation_pool_end}
 
 # Interfaces
-public_interface=`ip link show | grep -e "^3:" | awk '{print \$2}' | cut -d':' -f1`
 PHYSICAL_NETWORK=default
 PHYSICAL_INTERFACE=\${mlnx_port}
 OVS_PHYSICAL_BRIDGE=br-\${mlnx_port}
