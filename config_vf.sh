@@ -10,7 +10,7 @@ set -eu
 set -o pipefail
 
 # Force Nic
-FORCE_NIC=$(FORCE_NIC:-"")
+FORCE_NIC=$(FORCE_NIC:-)
 
 # Number of VF's to bring up
 NUM_OF_VFS=$(NUM_OF_VFS:-4)
