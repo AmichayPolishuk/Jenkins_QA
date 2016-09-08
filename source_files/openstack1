@@ -3,6 +3,7 @@ export controller_ip_address=10.209.24.126
 export public_gateway=10.209.86.1
 export floating_range=10.209.86.0/24
 export public_interface_ip=10.209.86.2
+export public_interface=`ip link show | grep -e "^3:" | awk '{print \$2}' | cut -d':' -f1`
 export floating_allocation_pool_start=10.209.86.3
 export floating_allocation_pool_end=10.209.86.11
 export vlan_pool_start=2
