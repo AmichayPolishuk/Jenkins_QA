@@ -72,7 +72,7 @@ USE_SCREEN=True
 # Extra
 [[post-config|\$NOVA_CONF]]
 [DEFAULT]
-pci_passthrough_whitelist ={"'"address"'":"'"'"${mlnx_dev}"'.*"'","'"physical_network"'":"'"default"'"}
+pci_passthrough_whitelist ={"'"address"'":"'"*:'"\${mlnx_dev}"'.*"'","'"physical_network"'":"'"default"'"}
 EOF
 exit 0
 
