@@ -34,7 +34,7 @@ fi
 HCA=$(sudo cat $TMP_DEV | grep ${MT} | head -1 | awk '{print $2}')
 HCA_BUS=$(sudo cat $TMP_DEV | grep ${MT} | head -1 | awk '{print $1}' | cut -d':' -f2,3 | cut -d'.' -f1)
 HCA_PORTS=$(sudo cat $TMP_DEV | grep ${MT} | wc -l)
-HCA_PORT_NAME=$(sudo cat $TMP_DEV | grep ${MT} | head -1 | awk '{print $16}')
+HCA_PORT_NAME=$(sudo cat $TMP_DEV | grep ${MT} | head -1 | cut -d'>' -f2 | cut -d' ' -f2)
 FABRIC_TYPE=$(ibstat $HCA 1 | grep layer | cut -d' ' -f3)
 export mlnx_dev=${HCA_BUS}
 echo $mlnx_dev
