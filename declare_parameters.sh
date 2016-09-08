@@ -13,7 +13,7 @@ fi
 sudo ibdev2netdev -v > ${TMP_DEV}
 
 MT=""
-if [ ${FORCE_NIC} != "" ]; then
+if [ "${FORCE_NIC}"" != "" ]; then
     case "${FORCE_NIC}" in
         CX4)
             MT=MT4115
@@ -27,7 +27,7 @@ if [ ${FORCE_NIC} != "" ]; then
     esac
 fi
 
-if [ ${MT} == "" ]; then
+if [ "${MT}"" == "" ]; then
     MT=$(sudo cat $TMP_DEV | head -1 | awk '{print $3}' | cut -d'(' -f2)
 fi
 
