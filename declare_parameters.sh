@@ -39,13 +39,13 @@ FABRIC_TYPE=$(ibstat $HCA 1 | grep layer | cut -d' ' -f3)
 export mlnx_dev=${HCA_BUS}
 echo $mlnx_dev
 
-if [ $FABRIC_TYPE == "Ethernet" ]; then
+if [ "$FABRIC_TYPE" == "Ethernet" ]; then
     export mlnx_port=${HCA_PORT_NAME}
     sudo ip link set dev $mlnx_port up
     echo $mlnx_port
 fi
 
-if [ $FABRIC_TYPE == "InfiniBand" ]; then
+if [ "$FABRIC_TYPE" == "InfiniBand" ]; then
     export epioib_port=${HCA_PORT_NAME}
     echo $epioib_port
     sudo ip link set dev $epioib_port up
