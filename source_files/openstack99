@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+export PATH=$PATH:/usr/sbin:/usr/bin
 export controller_ip_address=10.209.24.89
 export public_gateway=10.209.86.1
 export floating_range=10.209.86.0/24
