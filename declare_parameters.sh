@@ -49,7 +49,7 @@ if [ "$FABRIC_TYPE" == "InfiniBand" ]; then
     export epioib_port=${HCA_PORT_NAME}
     echo $epioib_port
     sudo ip link set dev $epioib_port up
-    export mlnx_port=$(sudo cat $TMP_DEV | grep ${MT} | head -2 | tail -1 | awk '{print $17}')
+    export mlnx_port=$(sudo cat $TMP_DEV | grep ${MT} | head -2 | tail -1 | cut -d'>' -f2 | cut -d' ' -f2)
     echo $mlnx_port
 fi
 
