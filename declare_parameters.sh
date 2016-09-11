@@ -37,7 +37,7 @@ HCA_PORTS=$(sudo cat $TMP_DEV | grep ${MT} | wc -l)
 HCA_PORT_NAME=$(sudo cat $TMP_DEV | grep ${MT} | head -1 | cut -d'>' -f2 | cut -d' ' -f2)
 FABRIC_TYPE=$(ibstat $HCA 1 | grep layer | cut -d' ' -f3)
 export mlnx_dev=${HCA_BUS}
-echo echo "Physical BUS: $mlnx_dev"
+echo "Physical BUS: $mlnx_dev"
 
 if [ "$FABRIC_TYPE" == "Ethernet" ]; then
     export mlnx_port=${HCA_PORT_NAME}
