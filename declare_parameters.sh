@@ -37,19 +37,19 @@ HCA_PORTS=$(sudo cat $TMP_DEV | grep ${MT} | wc -l)
 HCA_PORT_NAME=$(sudo cat $TMP_DEV | grep ${MT} | head -1 | cut -d'>' -f2 | cut -d' ' -f2)
 FABRIC_TYPE=$(ibstat $HCA 1 | grep layer | cut -d' ' -f3)
 export mlnx_dev=${HCA_BUS}
-echo $mlnx_dev
+echo echo "Physical BUS: $mlnx_dev"
 
 if [ "$FABRIC_TYPE" == "Ethernet" ]; then
     export mlnx_port=${HCA_PORT_NAME}
     sudo ip link set dev $mlnx_port up
-    echo $mlnx_port
+    echo "Physical port: echo $mlnx_port"
 fi
 
 if [ "$FABRIC_TYPE" == "InfiniBand" ]; then
     export epioib_port=${HCA_PORT_NAME}
-    echo $epioib_port
+    echo "E_IPOIB PORT: $epioib_port"
     sudo ip link set dev $epioib_port up
     export mlnx_port=$(sudo cat $TMP_DEV | grep ${MT} | head -2 | tail -1 | cut -d'>' -f2 | cut -d' ' -f2)
-    echo $mlnx_port
+    echo "Physical port: $mlnx_port"
 fi
 
