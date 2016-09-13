@@ -25,8 +25,7 @@ systemctl status openvswitch.service
 
 
 # Install GA OFED
-build=MLNX_OFED_LINUX-3.3-1.5.0.0 /mswg/release/MLNX_OFED/mlnx_ofed_install --hypervisor --add-kernel-support --force-fw-update --enable-sriov --force
-# build=latest /mswg/release/MLNX_OFED/mlnx_ofed_install --hypervisor --add-kernel-support --force-fw-update --enable-sriov --force
+build=last_release /mswg/release/MLNX_OFED/mlnx_ofed_install --hypervisor --add-kernel-support --force-fw-update --enable-sriov --force
 
 # Restart HCA
 /etc/init.d/openibd restart
