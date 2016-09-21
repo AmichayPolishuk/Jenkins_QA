@@ -41,7 +41,7 @@ VOLUME_BACKING_FILE_SIZE=10000M
 # Neutron
 SERVICE_TOKEN=servicetoken
 Q_PLUGIN=ml2
-Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch,mlnx,sdnmechdriver    
+Q_ML2_PLUGIN_MECHANISM_DRIVERS=mlnx_sdn_assist,openvswitch,mlnx_infiniband
 Q_AGENT=openvswitch
 Q_USE_DEBUG_COMMAND=False
 Q_USE_SECGROUP=True
@@ -90,6 +90,10 @@ scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters = RetryFilter, AvailabilityZoneFilter, RamFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, PciPassthroughFilter
 
 [[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
+[sdn]
+url = http://10.209.25.203/neo
+username = admin
+password = 123456
 [ml2_sriov]
 supported_pci_vendor_devs = 15b3:1004,15b3:1014,15b3:1016
 
