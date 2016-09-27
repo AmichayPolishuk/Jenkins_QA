@@ -14,8 +14,8 @@ echo "==========================================================="
 cat > /opt/stack/devstack/local.conf << EOF
 [[local|localrc]]
 DOWNLOAD_DEFAULT_IMAGES=False
-IMAGE_URLS="http://10.209.24.107/images/mellanox-ubuntu-xenial-OFED3.3-1.5.0.0.qcow2,"
-IMAGE_URLS+="http://10.209.24.107/images/mellanox-rhel7.2-OFED3.3-1.5.0.0.qcow2"
+IMAGE_URLS="http://10.209.25.63/images/mellanox-rhel-7.2-OFED-latest.qcow2,"
+IMAGE_URLS+="http://10.209.25.63/images/mellanox-ubuntu-xenial-OFED-latest.qcow2"
 MULTI_HOST=1
 ADMIN_PASSWORD=password
 MYSQL_PASSWORD=password
