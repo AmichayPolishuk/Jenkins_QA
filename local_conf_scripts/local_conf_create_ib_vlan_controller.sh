@@ -82,7 +82,7 @@ enable_service mlnx_dnsmasq
 USE_SCREEN=True
 
 # Plugins
-enable_plugin neutron_ml2_mlnx git://github.com/openstack/networking-mlnx
+enable_plugin neutron_ml2_mlnx git://github.com/openstack/networking-mlnx ${OS_BRANCH}
 
 [[post-config|\$NOVA_CONF]]
 [DEFAULT]
