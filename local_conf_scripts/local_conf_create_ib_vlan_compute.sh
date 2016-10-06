@@ -70,7 +70,7 @@ ENABLED_SERVICES=n-cpu,q-agt,n-api-meta,mlnx-agt,eswitchd
 USE_SCREEN=True
 
 # Plugins
-enable_plugin neutron_ml2_mlnx git://github.com/openstack/networking-mlnx
+enable_plugin neutron_ml2_mlnx git://github.com/openstack/networking-mlnx ${OS_BRANCH}
 
 # Extra
 [[post-config|\$NOVA_CONF]]
