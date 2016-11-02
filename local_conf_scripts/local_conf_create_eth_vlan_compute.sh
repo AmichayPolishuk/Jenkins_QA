@@ -64,6 +64,7 @@ VNCSERVER_PROXYCLIENT_ADDRESS=\$VNCSERVER_LISTEN
 
 # Plugins
 enable_plugin neutron git://git.openstack.org/openstack/neutron ${OS_BRANCH}
+enable_service q-qos
 
 # Services
 ENABLED_SERVICES=n-cpu,q-agt,n-api-meta,q-sriov-agt
