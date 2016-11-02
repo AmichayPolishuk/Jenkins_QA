@@ -82,8 +82,7 @@ enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth hor
 enable_service tempest
 
 # Plugins
-enable_plugin neutron_ml2_mlnx git://github.com/openstack/networking-mlnx 
-enable_plugin neutron git://git.openstack.org/openstack/neutron 
+enable_plugin neutron git://git.openstack.org/openstack/neutron ${OS_BRANCH}
 
 # Extra
 [[post-config|\$NOVA_CONF]]
