@@ -83,6 +83,7 @@ enable_service tempest
 
 # Plugins
 enable_plugin neutron git://git.openstack.org/openstack/neutron ${OS_BRANCH}
+enable_service q-qos
 
 # Extra
 [[post-config|\$NOVA_CONF]]
