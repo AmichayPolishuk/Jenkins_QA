@@ -8,10 +8,7 @@ fi
 set -eu
 set -o pipefail
 
-echo "==========================================================="
-echo " Create&Edit local.conf for Controller-Network-Cinder Node "
-echo "==========================================================="
-cat > /opt/stack/devstack/local.conf << EOF
+cat > /opt/stack/devstack/local.conf <<EOF
 [[local|localrc]]
 DOWNLOAD_DEFAULT_IMAGES=False
 IMAGE_URLS="http://10.209.25.63/images/mellanox-rhel-7.2-OFED-latest.qcow2,"
@@ -68,22 +65,18 @@ Q_FLOATING_ALLOCATION_POOL=start=${floating_allocation_pool_start},end=${floatin
 
 # Interfaces
 PHYSICAL_NETWORK=default
-PHYSICAL_INTERFACE=${mlnx_port}
-OVS_PHYSICAL_BRIDGE=br-${mlnx_port}
+PHYSICAL_INTERFACE=${mlnx_interface}
+OVS_PHYSICAL_BRIDGE=br-${mlnx_interface}
 PUBLIC_PHYSICAL_NETWORK=public
 PUBLIC_INTERFACE=${public_interface}
 PUBLIC_BRIDGE=br-ex
-OVS_BRIDGE_MAPPINGS=default:br-${mlnx_port},public:br-ex
+OVS_BRIDGE_MAPPINGS=default:br-${mlnx_interface},public:br-ex
 
 
 # Services
 disable_service h-eng h-api h-api-cfn h-api-cw n-net n-cpu
-enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon
-enable_service tempest
+enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon tempest q-qos
 
-# Plugins
-enable_plugin neutron git://git.openstack.org/openstack/neutron ${OS_BRANCH}
-enable_service q-qos
 
 # Extra
 [[post-config|\$NOVA_CONF]]
@@ -92,6 +85,11 @@ scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters = RetryFilter, AvailabilityZoneFilter, RamFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, PciPassthroughFilter
 
 [[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
+[sdn]
+url = http://10.209.25.203/neo
+username = admin
+password = 123456
+
 [ml2_sriov]
 supported_pci_vendor_devs = 15b3:1004,15b3:1014,15b3:1016
 

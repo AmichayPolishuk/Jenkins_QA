@@ -8,9 +8,6 @@ fi
 set -eu
 set -o pipefail
 
-echo "============================================"
-echo " Create&Edit local.conf for Controller Node "
-echo "============================================"
 cat > /opt/stack/devstack/local.conf <<EOF
 [[local|localrc]]
 DOWNLOAD_DEFAULT_IMAGES=False
@@ -23,17 +20,17 @@ RABBIT_PASSWORD=password
 SERVICE_PASSWORD=password
 HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
 
-# Logging
-LOGDIR=/opt/stack/logs
-LOGFILE=\$LOGDIR/stack.sh.log
-LOG_COLOR=False
-LOGDAYS=1
-
 # Stack
 PIP_UPGRADE=True
 
 # GIT
 RECLONE=no
+
+# Logging
+LOGDIR=/opt/stack/logs
+LOGFILE=\$LOGDIR/stack.sh.log
+LOG_COLOR=False
+LOGDAYS=1
 
 # Cinder
 VOLUME_BACKING_FILE_SIZE=10000M
@@ -68,22 +65,21 @@ Q_FLOATING_ALLOCATION_POOL=start=${floating_allocation_pool_start},end=${floatin
 
 # Interfaces
 PHYSICAL_NETWORK=default
-PHYSICAL_INTERFACE=${epioib_port}
-OVS_PHYSICAL_BRIDGE=br-${epioib_port}
+PHYSICAL_INTERFACE=${mlnx_interface}
+OVS_PHYSICAL_BRIDGE=br-${mlnx_interface}
 PUBLIC_PHYSICAL_NETWORK=public
 PUBLIC_INTERFACE=${public_interface}
 PUBLIC_BRIDGE=br-ex
-OVS_BRIDGE_MAPPINGS=default:br-${epioib_port},public:br-ex
+OVS_BRIDGE_MAPPINGS=default:br-${mlnx_interface},public:br-ex
 
 # Services
 disable_service h-eng h-api h-api-cfn h-api-cw n-net n-cpu
-enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon
-enable_service mlnx_dnsmasq
-USE_SCREEN=True
+enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon tempest mlnx_dnsmasq
 
 # Plugins
 enable_plugin neutron_ml2_mlnx git://github.com/openstack/networking-mlnx ${OS_BRANCH}
 
+# Extra
 [[post-config|\$NOVA_CONF]]
 [DEFAULT]
 scheduler_available_filters=nova.scheduler.filters.all_filters
@@ -108,6 +104,10 @@ iscsi_protocol = iser
 volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
 volume_backend_name = backend1
 volume_group = stack-volumes-lvmdriver-1
+
+[[post-extra|\$TEMPEST_CONFIG]]
+[network]
+port_vnic_type=direct
 
 [[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
 [ovs]
