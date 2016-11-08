@@ -8,10 +8,7 @@ fi
 set -eu
 set -o pipefail
 
-echo "========================================="
-echo " Create&Edit local.conf for Compute Node "
-echo "========================================="
-cat > /opt/stack/devstack/local.conf << EOF
+cat > /opt/stack/devstack/local.conf <<EOF
 [[local|localrc]]
 MULTI_HOST=1
 ADMIN_PASSWORD=password
@@ -24,7 +21,7 @@ HOST_IP=\$(host \$(hostname) | cut -d ' ' -f4)
 PIP_UPGRADE=True
 
 # GIT
-RECLONE=yes
+RECLONE=no
 
 # Logging
 LOGDIR=\${LOGDIR:-/opt/stack/logs}
@@ -48,8 +45,8 @@ ENABLE_TENANT_TUNNELS=False
 
 # Interfaces
 PHYSICAL_NETWORK=default
-PHYSICAL_INTERFACE=${mlnx_port}
-OVS_PHYSICAL_BRIDGE=br-${mlnx_port}
+PHYSICAL_INTERFACE=${mlnx_interface}
+OVS_PHYSICAL_BRIDGE=br-${mlnx_interface}
 
 # Controller connection
 SERVICE_HOST=${controller_ip_address}
@@ -61,9 +58,6 @@ NOVA_VNC_ENABLED=True
 NOVNCPROXY_URL="http://${controller_ip_address}:6080/vnc_auto.html"
 VNCSERVER_LISTEN=0.0.0.0
 VNCSERVER_PROXYCLIENT_ADDRESS=\$VNCSERVER_LISTEN
-
-# Plugins
-enable_plugin neutron git://git.openstack.org/openstack/neutron ${OS_BRANCH}
 
 # Services
 ENABLED_SERVICES=n-cpu,q-agt,n-api-meta,q-sriov-agt,q-qos

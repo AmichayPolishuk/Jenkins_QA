@@ -8,10 +8,7 @@ fi
 set -eu
 set -o pipefail
 
-echo "=================================================="
-echo " Step 5 - Create&Edit local.conf for Compute Node "
-echo "=================================================="
-cat > /opt/stack/devstack/local.conf <<EOF 
+cat > /opt/stack/devstack/local.conf <<EOF
 [[local|localrc]]
 MULTI_HOST=1
 ADMIN_PASSWORD=password
@@ -48,13 +45,13 @@ ENABLE_TENANT_TUNNELS=False
 
 # Interfaces
 PHYSICAL_NETWORK=default
-PHYSICAL_INTERFACE=${epioib_port}
-OVS_PHYSICAL_BRIDGE=br-${epioib_port}
+PHYSICAL_INTERFACE=${mlnx_eipoib_interface}
+OVS_PHYSICAL_BRIDGE=br-${mlnx_eipoib_interface}
 
 # IB - eswitchd mapping
-PHYSICAL_INTERFACE_MAPPINGS=default:${mlnx_port}
+PHYSICAL_INTERFACE_MAPPINGS=default:${mlnx_interface}
 
-#
+# Controller connection
 SERVICE_HOST=${controller_ip_address}
 MYSQL_HOST=${controller_ip_address}
 RABBIT_HOST=${controller_ip_address}
@@ -80,4 +77,4 @@ pci_passthrough_whitelist ={"'"address"'":"'"*:${mlnx_dev}:*.*"'","'"physical_ne
 [ovs]
 of_interface=ovs-ofctl
 EOF
-exit 0    
+exit 0
