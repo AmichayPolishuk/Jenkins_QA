@@ -38,7 +38,7 @@ VOLUME_BACKING_FILE_SIZE=10000M
 # Neutron
 SERVICE_TOKEN=servicetoken                                                            
 Q_PLUGIN=ml2                                                                          
-Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch,sriovnicswitch                             
+Q_ML2_PLUGIN_MECHANISM_DRIVERS=mlnx_sdn_assist,openvswitch,sriovnicswitch                             
 Q_AGENT=openvswitch                                                                   
 Q_USE_DEBUG_COMMAND=False                                                             
 Q_USE_SECGROUP=True                                                                   
@@ -72,11 +72,9 @@ PUBLIC_INTERFACE=${public_interface}
 PUBLIC_BRIDGE=br-ex
 OVS_BRIDGE_MAPPINGS=default:br-${mlnx_interface},public:br-ex
 
-
 # Services
 disable_service h-eng h-api h-api-cfn h-api-cw n-net n-cpu
 enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon tempest q-qos
-
 
 # Extra
 [[post-config|\$NOVA_CONF]]
@@ -84,6 +82,7 @@ enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth hor
 scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters = RetryFilter, AvailabilityZoneFilter, RamFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, PciPassthroughFilter
 
+# Neo
 [[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
 [sdn]
 url = http://10.209.25.203/neo

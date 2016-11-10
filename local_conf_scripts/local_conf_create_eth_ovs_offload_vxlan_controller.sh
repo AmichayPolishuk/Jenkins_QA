@@ -8,10 +8,7 @@ fi
 set -eu
 set -o pipefail
 
-echo "==========================================================="
-echo " Create&Edit local.conf for Controller-Network-Cinder Node "
-echo "==========================================================="
-cat > /opt/stack/devstack/local.conf << EOF
+cat > /opt/stack/devstack/local.conf <<EOF
 [[local|localrc]]
 DOWNLOAD_DEFAULT_IMAGES=False
 IMAGE_URLS="http://10.209.25.63/images/mellanox-rhel-7.2-OFED-latest.qcow2,"
@@ -33,7 +30,7 @@ NOVA_BRANCH=refs/changes/24/275624/14
 
 # Logging
 LOGDIR=/opt/stack/logs
-LOGFILE=$LOGDIR/stack.sh.log
+LOGFILE=\$LOGDIR/stack.sh.log
 LOG_COLOR=False
 LOGDAYS=1
 
@@ -43,7 +40,7 @@ VOLUME_BACKING_FILE_SIZE=10000M
 # Neutron
 SERVICE_TOKEN=servicetoken
 Q_PLUGIN=ml2        
-Q_ML2_PLUGIN_MECHANISM_DRIVERS=openvswitch
+Q_ML2_PLUGIN_MECHANISM_DRIVERS=mlnx_sdn_assist,openvswitch
 Q_AGENT=openvswitch
 Q_USE_DEBUG_COMMAND=False
 Q_USE_SECGROUP=True
@@ -67,10 +64,8 @@ FLOATING_RANGE=${floating_range}
 Q_FLOATING_ALLOCATION_POOL=start=${floating_allocation_pool_start},end=${floating_allocation_pool_end}
 
 # Interfaces
-mlnx_port=`ip link show |grep -a2 vf |head -n1 |awk '{print \$2}' |tr -d :`
-public_interface=`ip link show | grep -e "^3:" | awk '{print \$2}' | cut -d':' -f1`
-PHYSICAL_INTERFACE=\${mlnx_port}
-PUBLIC_INTERFACE=\${public_interface}
+PHYSICAL_INTERFACE=${mlnx_interface}
+PUBLIC_INTERFACE=${public_interface}
 PUBLIC_BRIDGE=br-ex
 PUBLIC_PHYSICAL_NETWORK=public
 OVS_BRIDGE_MAPPINGS=public:br-ex
@@ -79,15 +74,23 @@ TUNNEL_ENDPOINT_INTERFACE=\${PHYSICAL_INTERFACE}
 
 # Services
 disable_service h-eng h-api h-api-cfn h-api-cw n-net n-cpu
-enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon
-enable_service tempest
-USE_SCREEN=True
+enable_service neutron q-svc q-agt q-dhcp q-l3 q-meta n-novnc n-xvnc n-cauth horizon tempest q-qos
 
 # Extra
 [[post-config|\$NOVA_CONF]]
 [DEFAULT]
 scheduler_available_filters=nova.scheduler.filters.all_filters
 scheduler_default_filters = RetryFilter, AvailabilityZoneFilter, RamFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, PciPassthroughFilter
+
+# Neo
+[[post-config|/etc/neutron/plugins/ml2/ml2_conf.ini]]
+[sdn]
+url = http://10.209.25.203/neo
+username = admin
+password = 123456
+
+[ml2_sriov]
+supported_pci_vendor_devs = 15b3:1004,15b3:1014,15b3:1016
 
 [[post-config|/etc/cinder/cinder.conf]]
 [DEFAULT]
